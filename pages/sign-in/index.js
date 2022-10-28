@@ -9,9 +9,13 @@ import {
   Button,
 } from "@mui/material";
 import { toast } from "react-hot-toast";
+import Router, { useRouter } from "next/router";
+
 export default function SignIn() {
+  const router = useRouter();
   const onSignIn = () => {
-    toast.loading("Signing In");
+    toast.success("Signed In");
+    router.push("/dashboard");
   };
   return (
     <Box
@@ -59,7 +63,13 @@ export default function SignIn() {
             },
           }}
         >
-          Forgot password?
+          <span
+            onClick={() => {
+              router.push("/sign-up");
+            }}
+          >
+            Not a member?
+          </span>
         </Typography>
         <Box
           sx={{
