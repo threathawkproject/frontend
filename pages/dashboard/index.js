@@ -34,7 +34,7 @@ export default function DashboardHome() {
     </Box>
   );
 }
-
+//Layout
 DashboardHome.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
