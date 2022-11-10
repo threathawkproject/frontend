@@ -25,6 +25,7 @@ export const SidebarButton = (props) => {
         color: "white",
         fontWeight: 600,
         color: selected ? "#FFFFFF" : "#A3A2A9",
+        transitionDelay: "0.002s",
         "&:hover": {
           backgroundColor: "#2F69FE",
           color: "white",
