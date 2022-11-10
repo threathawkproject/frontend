@@ -1,12 +1,18 @@
 import React from "react";
 import { IconButton, Typography, Box, Stack } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 
 export const SidebarButton = (props) => {
-  const { Icon, title, ...other } = props;
+  const { Icon, title, selected, route, ...other } = props;
+  const router = useRouter();
+  const handleClick = () => {
+    console.log("Clicked");
+    router.push(route);
+  };
   return (
     <IconButton
-      style={{
+      onClick={handleClick}
+      sx={{
         display: "flex",
         fledDirection: "column",
         justifyContent: "center",
@@ -14,10 +20,15 @@ export const SidebarButton = (props) => {
         padding: "4px",
         width: 100,
         height: 100,
-        backgroundColor: "#2F69FE",
+        backgroundColor: selected ? "#2F69FE" : "#FFFFFF",
         borderRadius: "15px",
         color: "white",
         fontWeight: 600,
+        color: selected ? "#FFFFFF" : "#A3A2A9",
+        "&:hover": {
+          backgroundColor: "#2F69FE",
+          color: "white",
+        },
       }}
     >
       <Stack alignItems={"center"}>

@@ -1,49 +1,67 @@
 import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import { SidebarButton } from "../../buttons/sidebar-button";
-import threatHawkLogoWhite from "../../images/threatHawkLogoWhite.svg";
-import Image from "next/image";
-import DesktopWindowsOutlinedIcon from "@mui/icons-material/DesktopWindowsOutlined";
-import { DashboardCustomizeOutlined } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import {
+  DesktopWindowsOutlined,
+  Search,
+  Layers,
+  FormatShapes,
+  History,
+  LocalOffer,
+  Notifications,
+  LibraryBooks,
+  Settings,
+} from "@mui/icons-material";
 const menuItems = [
   {
     title: "Home",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: DesktopWindowsOutlined,
+    route: "/dashboard",
   },
   {
     title: "Investigate",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: Search,
+    route: "/dashboard/investigate",
   },
   {
     title: "Feeds",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: Layers,
+    route: "/dashboard/feeds",
   },
   {
     title: "Analyzers",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: FormatShapes,
+    route: "/dashboard/analyzers",
   },
   {
     title: "History",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: History,
+    route: "/dashboard/history",
   },
   {
     title: "Tags",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: LocalOffer,
+    route: "/dashboard/tags",
   },
   {
     title: "Alerts",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: Notifications,
+    route: "/dashboard/alerts",
   },
   {
     title: "Guides",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: LibraryBooks,
+    route: "/dashboard/guides",
   },
   {
     title: "Settings",
-    icon: DesktopWindowsOutlinedIcon,
+    icon: Settings,
+    route: "/dashboard/settings",
   },
 ];
 export const SidebarDashboard = () => {
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -76,22 +94,29 @@ export const SidebarDashboard = () => {
             threat hawk
           </Typography>
         </Box>
-        <Grid
-          container
+        <Box
           sx={{
             marginTop: "80px",
+            display: "grid",
+            gridTemplateColumns: "auto auto",
+            rowGap: "30px",
+            columnGap: "30px",
           }}
           spacing={{ xs: 2 }}
         >
-          <Grid item xs={6} key={0} sx={{ width: 100, height: 100 }}>
-            <SidebarButton Icon={DesktopWindowsOutlinedIcon} title={"Home"} />
-          </Grid>
-          {/* {menuItems.map((item, index) => {
+          {menuItems.map((item, index) => {
             return (
-              
+              <Box xs={6} key={index} sx={{ width: 100, height: 100 }}>
+                <SidebarButton
+                  selected={router.asPath === item.route ? true : false}
+                  Icon={item.icon}
+                  title={item.title}
+                  route={item.route}
+                />
+              </Box>
             );
-          })} */}
-        </Grid>
+          })}
+        </Box>
       </Box>
     </Box>
   );
