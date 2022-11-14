@@ -13,8 +13,76 @@ export const SidebarMain = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      <div
+        style={{
+          height: "240px",
+          width: "240px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "70%",
+          top: "-118px",
+        }}
+      />
+      <div
+        style={{
+          height: "75px",
+          width: "75px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "15%",
+          top: "70px",
+        }}
+      />
+      <div
+        style={{
+          height: "113px",
+          width: "113px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "15%",
+          top: "60%",
+        }}
+      />
+      <div
+        style={{
+          height: "50px",
+          width: "50px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "50%",
+          top: "70%",
+        }}
+      />
+      <div
+        style={{
+          height: "330px",
+          width: "330px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "-20%",
+          top: "80%",
+        }}
+      />
+      <div
+        style={{
+          height: "235px",
+          width: "235px",
+          backgroundColor: "#487CFE",
+          borderRadius: "100%",
+          position: "absolute",
+          left: "80%",
+          top: "60%",
+        }}
+      />
       <Box
         style={{
           marginTop: "280px",
