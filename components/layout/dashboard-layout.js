@@ -3,24 +3,32 @@ import { Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import baseTheme from "../theme/base-theme";
 import { Toaster } from "react-hot-toast";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
+const queryClient = new QueryClient();
 export default function DashboardLayout({ children }) {
   return (
-    <ThemeProvider theme={baseTheme}>
-      <Toaster />
-      <Box
-        sx={{
-          display: "flex",
-        }}
-      >
-        <SidebarDashboard />
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={baseTheme}>
+        <Toaster />
         <Box
           sx={{
-            flexGrow: "100",
+            display: "flex",
           }}
         >
-          {children}
+          <SidebarDashboard />
+          <Box
+            sx={{
+              flexGrow: "100",
+            }}
+          >
+            {children}
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
