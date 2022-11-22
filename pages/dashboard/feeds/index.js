@@ -11,6 +11,9 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import { ClassificationPieChart } from "../../../components/feeds/classification-pie-chart";
+import { NewIndicatorCards } from "../../../components/feeds/new-indicator-cards";
+import { SourcePieChart } from "../../../components/feeds/source-pie-chart";
 export default function Feeds() {
   return (
     <Box
@@ -18,14 +21,16 @@ export default function Feeds() {
         margin: "45px 45px 0px 50px",
       }}
     >
-      <Typography
-        variant="h3"
-        sx={{
-          fontWeight: "700",
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "auto auto auto",
         }}
       >
-        Feeds
-      </Typography>
+        <ClassificationPieChart />
+        <NewIndicatorCards />
+        <SourcePieChart />
+      </div>
       <Card sx={{ marginTop: "80px" }}>
         <Box sx={{ minWidth: 400 }}>
           <Table>
