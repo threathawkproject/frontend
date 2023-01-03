@@ -5,16 +5,36 @@ import {
   Box,
   Card,
   CardHeader,
+  TablePagination,
   Table,
   TableHead,
   TableRow,
   TableCell,
   TableBody,
+  TableFooter,
+  Paper,
 } from "@mui/material";
 import { ClassificationPieChart } from "../../../components/feeds/classification-pie-chart";
 import { NewIndicatorCards } from "../../../components/feeds/new-indicator-cards";
 import { SourcePieChart } from "../../../components/feeds/source-pie-chart";
+import { useState } from "react";
+import { getDummyData } from "./dummyData";
+import { useRouter } from "next/router";
+const dummyData = getDummyData();
 export default function Feeds() {
+  const router = useRouter();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <Box
       sx={{
@@ -32,9 +52,18 @@ export default function Feeds() {
         <SourcePieChart />
       </div>
       <Card sx={{ marginTop: "80px" }}>
-        <Box sx={{ minWidth: 400 }}>
-          <Table>
-            <TableHead sx={{ backgroundColor: " #F6F5FA" }}>
+        <Paper sx={{ minWidth: 400, maxHeight: "430px", overflowY: "scroll" }}>
+          <Table
+            sx={{
+              height: "max-content",
+            }}
+            stickyHeader
+          >
+            <TableHead
+              sx={{
+                backgroundColor: " #F6F5FA",
+              }}
+            >
               <TableRow>
                 <TableCell>Source</TableCell>
                 <TableCell>IOC</TableCell>
@@ -42,14 +71,53 @@ export default function Feeds() {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Abuse IPDB</TableCell>
-                <TableCell>192.168.322.2</TableCell>
-                <TableCell align="right">IP Address</TableCell>
-              </TableRow>
+              {dummyData.map((data) => {
+                return (
+                  <TableRow
+                    sx={{
+                      "&:hover": {
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      },
+                    }}
+                    onClick={() => {
+                      router.push("investigate/" + data.ioc);
+                    }}
+                  >
+                    <TableCell>{data.sources[0]}</TableCell>
+                    <TableCell>{data.ioc}</TableCell>
+                    <TableCell align="right">{data.type}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
+            <TableFooter
+              sx={{
+                bottom: 0, // <-- KEY
+                zIndex: 2,
+                position: "sticky",
+                width: "100%",
+                backgroundColor: "#F6F5FA",
+              }}
+            >
+              {/* <TableRow
+                sx={{
+                  width: "100%",
+                }}
+              >
+                <TablePagination
+                  rowsPerPageOptions={[10, 25, 100]}
+                  component="div"
+                  count={30}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </TableRow> */}
+            </TableFooter>
           </Table>
-        </Box>
+        </Paper>
       </Card>
     </Box>
   );

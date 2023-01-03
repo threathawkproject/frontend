@@ -62,7 +62,7 @@ export const SourcePieChart = () => {
                 marginRight: "5px",
               }}
             ></div>
-            America
+            Dark List
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <div

@@ -16,17 +16,17 @@ export default function DashboardHome() {
         }}
       >
         <HomeInfoCard
-          title={895}
+          title={14}
           subTitle={"Observables Scanned"}
           backgroundColor={"#59C3F3"}
         />
         <HomeInfoCard
-          title={56}
+          title={5302}
           subTitle={"New indicators"}
           backgroundColor={"#AFE7FB"}
         />
         <HomeInfoCard
-          title={2}
+          title={0}
           subTitle={"New Alerts"}
           backgroundColor={"#FF7D4C"}
         />
