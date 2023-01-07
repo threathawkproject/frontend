@@ -1,6 +1,6 @@
 import React from "react";
 import DashboardLayout from "../../../components/layout/dashboard-layout";
-import { Box } from "@mui/material";
+import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import {
   TextField,
   IconButton,
@@ -20,41 +20,28 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-const dummyData = {
-  email: "huzaifa2469@gmail.com",
-  reputation: "high",
-  suspicious: false,
-  references: 2,
-  details: {
-    blacklisted: false,
-    malicious_activity: false,
-    malicious_activity_recent: false,
-    credentials_leaked: true,
-    credentials_leaked_recent: false,
-    data_breach: true,
-    first_seen: "12/01/2018",
-    last_seen: "12/01/2018",
-    domain_exists: true,
-    domain_reputation: "n/a",
-    new_domain: false,
-    days_since_domain_creation: 9975,
-    suspicious_tld: false,
-    spam: false,
-    free_provider: true,
-    disposable: false,
-    deliverable: true,
-    accept_all: false,
-    valid_mx: true,
-    primary_mx: "gmail-smtp-in.l.google.com",
-    spoofable: true,
-    spf_strict: true,
-    dmarc_enforced: false,
-    profiles: ["twitter"],
+import { CircularProgress } from "@mui/material";
+import { useMemo } from "react";
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
   },
-  summary:
-    "Not suspicious. This email address has been seen in 2 reputable sources on the internet, including Twitter. It has been seen in data breaches or credential leaks as recent as 12/01/2018, but not recently. We've observed no malicious or suspicious activity from this address. ",
+  getContentAnchorEl: null,
+  anchorOrigin: {
+    vertical: "bottom",
+    horizontal: "center",
+  },
+  transformOrigin: {
+    vertical: "top",
+    horizontal: "center",
+  },
+  variant: "menu",
 };
-
 const analyzeRequest = async (postData) => {
   const resp = await axios.post("http://127.0.0.1:8000/analyze", postData);
   return resp.data;
@@ -77,7 +64,53 @@ const iocTypes = [
     value: "url",
     name: "URL",
   },
+  {
+    value: "file",
+    name: "File",
+  },
 ];
+const srcs = {
+  emailRep: {
+    type: "email",
+    path: "analyzers.webAnalyzers.emailRep",
+    className: "EmailRep",
+  },
+  robtex: {
+    type: "observable",
+    path: "analyzers.webAnalyzers.robtex",
+    className: "Robtex",
+  },
+  geoIP2: {
+    type: "ip",
+    path: "analyzers.webAnalyzers.geoIP2",
+    className: "GeoIP2",
+    accountID: 771503,
+    key: "fKh4TiE6RFjEKDo9",
+  },
+  abuseIPDB: {
+    type: "ip",
+    path: "analyzers.webAnalyzers.abuseIPDB",
+    className: "AbuseIPDB",
+    key: "02241dd0b2496a7dcc6ae14ec1791d8c4cb29cdc1ee5207ad82ab96cc4721a17b931a6420003a2a0",
+  },
+  honeyDB: {
+    type: "ip",
+    path: "analyzers.webAnalyzers.honeyDB",
+    className: "HoneyDB",
+    id: "2a7247b71a923763bb17dbf0185320742a972f64e5757ef9c0d5fe9918e4ec7c",
+    key: "d72b1b4ff45ab4ba4284f62d6190963fbb88f2578974f02a5e7b6dbf0c24ee6d",
+  },
+  threatMiner: {
+    type: "ip",
+    path: "analyzers.webAnalyzers.threatMiner",
+    className: "ThreatMiner",
+  },
+  stringsifter: {
+    type: "file",
+    path: "analyzers.dockerAnalyzers.stringsifter",
+    className: "StringSifter",
+  },
+};
 export default function Investigate() {
   const { isLoading, mutateAsync } = useMutation(analyzeRequest, {
     onSuccess: (d) => {
@@ -89,49 +122,66 @@ export default function Investigate() {
     },
   });
   const router = useRouter();
-  const { ic } = router.query;
-  console.log("IOC", ic);
+  const ic = router.query?.slug?.[0];
+
   const [ioc, setIoc] = useState(ic ? ic : "");
   const [iocType, setIocType] = useState("ip");
-  const [sources, setSources] = useState([
-    "emailRep",
-    "abuseIPDB",
-    "geoIP2",
-    "honeyDB",
-  ]);
-  const [selectedSources, setSelectedSources] = useState([
-    "abuseIPDB",
-    "geoIP2",
-    "honeyDB",
-  ]);
+  const sources = useMemo(() => {
+    let srcList = [];
+    for (const property in srcs) {
+      console.log(`${property}: ${srcs[property]}`);
+      if (
+        srcs[property].type === iocType ||
+        srcs[property].type === "observable"
+      ) {
+        srcList.push(property);
+      }
+    }
+    return srcList;
+  }, [iocType]);
+  console.log("s", sources);
+  const [selectedSources, setSelectedSources] = useState([]);
   console.log(selectedSources);
   const handleChange = (e) => {
     setIoc(e.target.value);
   };
   const handleChangeIocType = (e) => {
+    setSelectedSources([]);
     setIocType(e.target.value);
   };
   const analyze = () => {
     let postData = {};
     console.log("v", validateEmail(ioc));
+
     if (validateEmail(ioc)) {
       postData = {
         ioc: ioc,
         selected_analyzers: ["emailRep"],
       };
     } else {
+      const iocToAnalyze = ioc.includes("/")
+        ? ioc.substring(0, ioc.indexOf("/"))
+        : ioc;
+
+      console.log("IOC", iocToAnalyze);
       postData = {
-        ioc: ioc,
+        ioc: iocToAnalyze,
         selected_analyzers: selectedSources,
       };
     }
 
     console.log("Post Data", postData);
     toast.loading("Performing Enrichment");
-    mutateAsync(postData).then(() => {
-      toast.dismiss();
-      toast.success("Enriched " + iocType);
-    });
+    mutateAsync(postData)
+      .then(() => {
+        toast.dismiss();
+        toast.success("Enriched " + iocType);
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.dismiss();
+        toast.error("Could not perform enrichment check logs for details");
+      });
   };
   function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
@@ -147,13 +197,18 @@ export default function Investigate() {
       );
     }
   };
+  const handleSelectSources = (e) => {
+    setSelectedSources(e.target.value);
+  };
   return (
     <Box>
       <Box
         sx={{
           width: "100%",
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Box
@@ -211,29 +266,35 @@ export default function Investigate() {
             </Select>
           </FormControl>
         </Box>
-      </Box>
-
-      <Box>
-        {sources.map((source) => {
-          return (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                maxWidth: "150px",
-                marginLeft: "80px",
-              }}
-            >
-              <Typography>{source}</Typography>
-              <Checkbox
-                value={source}
-                defaultChecked={selectedSources.includes(source)}
-                onChange={handleChangeSelectedSources}
-              />
-            </Box>
-          );
-        })}
+        <FormControl
+          sx={{
+            width: "720px",
+            marginTop: "5px",
+          }}
+        >
+          <InputLabel id="demo-simple-select-label">Select Sorces</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedSources}
+            multiple
+            label="Select Sorces"
+            onChange={handleSelectSources}
+            MenuProps={MenuProps}
+            renderValue={(selected) => selected.join(", ")}
+          >
+            {sources.map((source, index) => {
+              return (
+                <MenuItem value={source} key={index}>
+                  <ListItemIcon>
+                    <Checkbox checked={selectedSources.includes(source)} />
+                  </ListItemIcon>
+                  <ListItemText>{source}</ListItemText>
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Box>
       <Box
         sx={{
@@ -244,8 +305,16 @@ export default function Investigate() {
           alignItems: "center",
         }}
       >
-        {sources.map((source, index) => {
-          return <ResultsDisplay source={source} key={index} data={data} />;
+        {selectedSources.map((source, index) => {
+          return (
+            <ResultsDisplay
+              isIncluded={selectedSources.includes(source)}
+              source={source}
+              key={index}
+              data={data}
+              isLoading={isLoading}
+            />
+          );
         })}
       </Box>
     </Box>
@@ -255,6 +324,8 @@ export default function Investigate() {
 const ResultsDisplay = (props) => {
   const source = props.source;
   const data = props.data;
+  const isIncluded = props.isIncluded;
+  const isLoading = props.isLoading;
   const [expanded, setExpanded] = React.useState(false);
   const handleChangePanel = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -276,7 +347,13 @@ const ResultsDisplay = (props) => {
           <b>{source}</b>
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {data[source] ? "Data Fetched" : "No Data"}
+          {isIncluded && isLoading ? (
+            <CircularProgress size="1.5rem" />
+          ) : data[source] ? (
+            "Data Fetched"
+          ) : (
+            "No Data"
+          )}
         </Typography>
       </AccordionSummary>
       <AccordionDetails

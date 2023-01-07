@@ -20,7 +20,7 @@ const menuItems = [
     route: "/dashboard",
   },
   {
-    title: "Investigate",
+    title: "Enrichment",
     icon: Search,
     route: "/dashboard/investigate",
   },
@@ -69,6 +69,8 @@ export const SidebarDashboard = () => {
         height: "100vh",
         background: "#F6F5FA",
         borderRight: "1px solid rgba(191, 195, 203, 0.25)",
+        position: "sticky",
+        top: "0",
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",

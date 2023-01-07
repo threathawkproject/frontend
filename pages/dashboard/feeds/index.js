@@ -81,7 +81,9 @@ export default function Feeds() {
                       },
                     }}
                     onClick={() => {
-                      router.push("investigate/" + data.ioc);
+                      router.push(
+                        "investigate/" + encodeURIComponent(data.ioc)
+                      );
                     }}
                   >
                     <TableCell>{data.sources[0]}</TableCell>
