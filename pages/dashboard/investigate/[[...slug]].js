@@ -68,6 +68,18 @@ const iocTypes = [
     value: "file",
     name: "File",
   },
+  {
+    value: "sha1",
+    name: "SHA1",
+  },
+  {
+    value: "sha256",
+    name: "SHA256",
+  },
+  {
+    value: "md5",
+    name: "MD5",
+  },
 ];
 const srcs = {
   emailRep: {
@@ -251,7 +263,7 @@ export default function Investigate() {
               width: "120px",
             }}
           >
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <InputLabel id="demo-simple-select-label">IOC Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"

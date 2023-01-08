@@ -104,6 +104,11 @@ export const SourcePieChart = () => {
           }}
           options={{
             radius: "80%",
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
           }}
           //   style={{
           //     height: "200px",

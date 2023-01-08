@@ -2,9 +2,27 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { Pie } from "react-chartjs-2";
 
-import { Chart, ArcElement } from "chart.js";
+import {
+  Chart,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-Chart.register(ArcElement);
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 export const ClassificationPieChart = () => {
   return (
     <Box>
@@ -104,6 +122,11 @@ export const ClassificationPieChart = () => {
           }}
           options={{
             radius: "80%",
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
           }}
           //   style={{
           //     height: "200px",

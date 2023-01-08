@@ -37,7 +37,7 @@ const MapChart = () => {
       <Geographies geography={geoUrl}>
         {({ geographies }) =>
           geographies.map((geo) => (
-            <Geography key={geo.rsmKey} geography={geo} fill="#DDD" />
+            <Geography key={geo.rsmKey} geography={geo} fill="#97b0f0" />
           ))
         }
       </Geographies>

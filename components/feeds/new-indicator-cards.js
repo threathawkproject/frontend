@@ -14,13 +14,13 @@ export const NewIndicatorCards = () => {
       }}
     >
       <HomeInfoCard
-        title={56}
+        title={6024}
         subTitle={"NEW INDICATORS"}
         backgroundColor={"#6066F4"}
       />
       <HomeInfoCard
-        title={23}
-        subTitle={"COLLECTIONS"}
+        title={6}
+        subTitle={"SOURCES"}
         backgroundColor={"#59C3F3"}
       />
     </div>
