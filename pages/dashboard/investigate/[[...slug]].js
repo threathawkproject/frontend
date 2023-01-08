@@ -73,7 +73,7 @@ const srcs = {
   emailRep: {
     type: "email",
     path: "analyzers.webAnalyzers.emailRep",
-    className: "EmailRep",
+    className: "EmailRepClass",
   },
   robtex: {
     type: "observable",
@@ -105,6 +105,12 @@ const srcs = {
     path: "analyzers.webAnalyzers.threatMiner",
     className: "ThreatMiner",
   },
+  virusTotal: {
+    type: "observable",
+    path: "analyzers.webAnalyzers.virusTotal",
+    className: "VirusTotal",
+    key: "45191dd08477e7c7ce89a32e4b7e8f46a6848fde192e9480ce67fa9872c9f2b2",
+  },
   stringsifter: {
     type: "file",
     path: "analyzers.dockerAnalyzers.stringsifter",
@@ -115,9 +121,12 @@ export default function Investigate() {
   const { isLoading, mutateAsync } = useMutation(analyzeRequest, {
     onSuccess: (d) => {
       toast.success("Data Fetched");
-      setData(d);
+      if (d) setData(d);
+      else setData({});
+      console.log("Data", d);
     },
     onError: (e) => {
+      console.log("error", e);
       toast.error("Unable to fetch data. Try Again!");
     },
   });
@@ -153,22 +162,16 @@ export default function Investigate() {
     let postData = {};
     console.log("v", validateEmail(ioc));
 
-    if (validateEmail(ioc)) {
-      postData = {
-        ioc: ioc,
-        selected_analyzers: ["emailRep"],
-      };
-    } else {
-      const iocToAnalyze = ioc.includes("/")
-        ? ioc.substring(0, ioc.indexOf("/"))
-        : ioc;
+    const iocToAnalyze = ioc.includes("/")
+      ? ioc.substring(0, ioc.indexOf("/"))
+      : ioc;
 
-      console.log("IOC", iocToAnalyze);
-      postData = {
-        ioc: iocToAnalyze,
-        selected_analyzers: selectedSources,
-      };
-    }
+    console.log("IOC", iocToAnalyze);
+    postData = {
+      ioc: iocToAnalyze,
+      selected_analyzers: selectedSources,
+      type: iocType,
+    };
 
     console.log("Post Data", postData);
     toast.loading("Performing Enrichment");

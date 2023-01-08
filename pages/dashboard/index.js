@@ -1,7 +1,9 @@
 import React from "react";
 import DashboardLayout from "../../components/layout/dashboard-layout";
 import { HomeInfoCard } from "../../components/cards/home-info-card";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import MapChart from "../../components/maps/MapChart";
+import { IOCTypesBarChart } from "../../components/charts/iocTypesBarChart";
 export default function DashboardHome() {
   return (
     <Box
@@ -30,6 +32,22 @@ export default function DashboardHome() {
           subTitle={"New Alerts"}
           backgroundColor={"#FF7D4C"}
         />
+      </Box>
+      <Box marginTop="50px">
+        <Typography variant="h4" fontWeight={"bold"}>
+          IOCs by Type
+        </Typography>
+        <Box display={"flex"} justifyContent="center">
+          <IOCTypesBarChart />
+        </Box>
+      </Box>
+      <Box marginTop="50px">
+        <Typography variant="h4" fontWeight={"bold"}>
+          IOCs by location
+        </Typography>
+        <Box display={"flex"} justifyContent="center">
+          <MapChart />
+        </Box>
       </Box>
     </Box>
   );
