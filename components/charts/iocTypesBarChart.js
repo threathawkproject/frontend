@@ -49,14 +49,17 @@ export const IOCTypesBarChart = () => {
   const urls = dummyData.filter((data) => data.type === "url")?.length;
   const emails = dummyData.filter((data) => data.type === "email")?.length;
   const file = dummyData.filter((data) => data.type === "file")?.length;
-  const hash = dummyData.filter((data) => data.type === "hash")?.length;
+  const hash = dummyData.filter(
+    (data) =>
+      data.type === "md5" || data.type === "sha256" || data.type === "sha1"
+  )?.length;
   const domain = dummyData.filter((data) => data.type === "domain")?.length;
   const data = {
     labels,
     datasets: [
       {
         label: "# IOCs",
-        data: [ips, urls, emails, file, hash, domain],
+        data: [ips, 200, emails, 100, hash, 322],
         backgroundColor: "rgba(47, 105, 254,0.6)",
       },
     ],

@@ -5,7 +5,27 @@ import { Pie } from "react-chartjs-2";
 import { Chart, ArcElement } from "chart.js";
 
 Chart.register(ArcElement);
+
+const colors = [
+  "#59C3F3",
+  "#6066F4",
+  "#AFE7FB",
+  "#29E3CD",
+  "#B85B3F",
+  "#303481",
+  "#BA69DE",
+  "#F3558E",
+  "#263859",
+];
 export const SourcePieChart = () => {
+  const sourcesList = [
+    "AbuseIPDB",
+    "Darklist",
+    "Bortvirj",
+    "MalwareBazaar",
+    "URLHaus",
+  ];
+
   return (
     <Box>
       <Typography
@@ -21,7 +41,7 @@ export const SourcePieChart = () => {
       <div
         style={{
           width: "300px",
-          height: "300px",
+          height: "400px",
           border: "2.5px solid rgba(191, 195, 203, 0.25)",
           borderRadius: "15px",
           display: "flex",
@@ -40,64 +60,32 @@ export const SourcePieChart = () => {
             fontWeight: "500",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                backgroundColor: "#59C3F3",
-                height: "5px",
-                width: "20px",
-                borderRadius: "15px",
-                marginRight: "5px",
-              }}
-            ></div>
-            Botvirj
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                backgroundColor: "#6066F4",
-                height: "5px",
-                width: "20px",
-                borderRadius: "15px",
-                marginRight: "5px",
-              }}
-            ></div>
-            Dark List
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                backgroundColor: "#AFE7FB",
-                height: "5px",
-                width: "20px",
-                borderRadius: "15px",
-                marginRight: "5px",
-              }}
-            ></div>
-            BlockList
-          </div>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div
-              style={{
-                backgroundColor: "#29E3CD",
-                height: "5px",
-                width: "20px",
-                borderRadius: "15px",
-                marginRight: "5px",
-              }}
-            ></div>
-            AbuseIPDB
-          </div>
+          {sourcesList.map((analyzer, index) => {
+            return (
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <div
+                  style={{
+                    backgroundColor: colors[index],
+                    height: "5px",
+                    width: "20px",
+                    borderRadius: "15px",
+                    marginRight: "5px",
+                  }}
+                ></div>
+                {analyzer}
+              </div>
+            );
+          })}
         </div>
         <Pie
           data={{
-            labels: ["Botvirj", "DarkList", "AbuseIPDB", "BlockList"],
+            labels: sourcesList,
 
             datasets: [
               {
                 label: "IOC Classifications",
-                data: [230, 300, 100, 400],
-                backgroundColor: ["#59C3F3", "#6066F4", "#AFE7FB", "#29E3CD"],
+                data: [230, 300, 100, 400, 230],
+                backgroundColor: colors,
                 hoverOffset: 4,
               },
             ],

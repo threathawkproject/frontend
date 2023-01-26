@@ -39,7 +39,7 @@ export const ClassificationPieChart = () => {
       <div
         style={{
           width: "300px",
-          height: "300px",
+          height: "400px",
           border: "2.5px solid rgba(191, 195, 203, 0.25)",
           borderRadius: "15px",
           display: "flex",
@@ -106,16 +106,47 @@ export const ClassificationPieChart = () => {
             ></div>
             URL
           </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                backgroundColor: "#FF7D4C",
+                height: "5px",
+                width: "20px",
+                borderRadius: "15px",
+                marginRight: "5px",
+              }}
+            ></div>
+            Email
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div
+              style={{
+                backgroundColor: "#adadad",
+                height: "5px",
+                width: "20px",
+                borderRadius: "15px",
+                marginRight: "5px",
+              }}
+            ></div>
+            File
+          </div>
         </div>
         <Pie
           data={{
-            labels: ["Hash", "Domain", "URL", "IP"],
+            labels: ["Hash", "Domain", "URL", "IP", "Email", "File"],
 
             datasets: [
               {
                 label: "IOC Classifications",
-                data: [250, 300, 50, 100],
-                backgroundColor: ["#59C3F3", "#6066F4", "#AFE7FB", "#29E3CD"],
+                data: [383, 322, 200, 368, 20, 100],
+                backgroundColor: [
+                  "#59C3F3",
+                  "#6066F4",
+                  "#AFE7FB",
+                  "#29E3CD",
+                  "#FF7D4C",
+                  "#adadad",
+                ],
                 hoverOffset: 4,
               },
             ],
