@@ -22,6 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
+import { InvestigationGraph } from "../../../components/graph/InvestigationGraph";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -331,6 +332,13 @@ export default function Investigate() {
             />
           );
         })}
+        <div
+          style={{
+            border: "2px dashed #C1C1C2",
+          }}
+        >
+          <InvestigationGraph />
+        </div>
       </Box>
     </Box>
   );
