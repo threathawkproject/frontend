@@ -44,7 +44,13 @@ const MenuProps = {
   variant: "menu",
 };
 const analyzeRequest = async (postData) => {
-  const resp = await axios.post("http://127.0.0.1:8080/analyze", postData);
+  const form = new FormData()
+  form.append('form',JSON.stringify(postData))
+  const resp = await axios.post("http://127.0.0.1:8080/analyze", form,{
+    headers:{
+      'Content-Type':'multipart/form-data'
+    }
+  });
   return resp.data;
 };
 const getAnalyzers = async ()=>{
