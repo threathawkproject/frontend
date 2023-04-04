@@ -10,7 +10,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { getDummyData } from "../../pages/dashboard/feeds/dummyData";
 
 ChartJS.register(
   CategoryScale,
@@ -43,17 +42,12 @@ const labels = [
 ];
 
 export const IOCTypesBarChart = () => {
-  const dummyData = getDummyData();
-
-  const ips = dummyData.filter((data) => data.type === "IP")?.length;
-  const urls = dummyData.filter((data) => data.type === "url")?.length;
-  const emails = dummyData.filter((data) => data.type === "email")?.length;
-  const file = dummyData.filter((data) => data.type === "file")?.length;
-  const hash = dummyData.filter(
-    (data) =>
-      data.type === "md5" || data.type === "sha256" || data.type === "sha1"
-  )?.length;
-  const domain = dummyData.filter((data) => data.type === "domain")?.length;
+  const ips = 369
+  const urls = 100
+  const emails = 240
+  const file = 50
+  const hash = 69
+  const domain = 39
   const data = {
     labels,
     datasets: [

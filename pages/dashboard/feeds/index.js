@@ -23,7 +23,6 @@ import { ClassificationPieChart } from "../../../components/feeds/classification
 import { NewIndicatorCards } from "../../../components/feeds/new-indicator-cards";
 import { SourcePieChart } from "../../../components/feeds/source-pie-chart";
 import { useState } from "react";
-import { getDummyData } from "./dummyData";
 import { useRouter } from "next/router";
 import { Search } from "@mui/icons-material";
 // const iocs = getDummyData();

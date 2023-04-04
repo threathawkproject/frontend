@@ -71,7 +71,7 @@ export default function DashboardHome() {
       <Box sx={{ marginTop: "20px" }}>
         {analyzersList.map((analyzer, index) => {
           return (
-            <Box sx={{ marginBottom: "20px" }}>
+            <Box key={index} sx={{ marginBottom: "20px" }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Typography variant="h6">
                   {index + 1}: {analyzer}

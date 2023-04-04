@@ -62,7 +62,7 @@ export const SourcePieChart = () => {
         >
           {sourcesList.map((analyzer, index) => {
             return (
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div key={index} style={{ display: "flex", alignItems: "center" }}>
                 <div
                   style={{
                     backgroundColor: colors[index],
