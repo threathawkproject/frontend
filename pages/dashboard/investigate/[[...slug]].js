@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Search, Visibility } from "@mui/icons-material";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
@@ -44,9 +44,13 @@ const MenuProps = {
   variant: "menu",
 };
 const analyzeRequest = async (postData) => {
-  const resp = await axios.post("http://127.0.0.1:8000/analyze", postData);
+  const resp = await axios.post("http://127.0.0.1:8080/analyze", postData);
   return resp.data;
 };
+const getAnalyzers = async ()=>{
+  const resp = await axios.get("http://127.0.0.1:8080/analyzers");
+  return resp.data;
+}
 
 const iocTypes = [
   {
@@ -82,54 +86,6 @@ const iocTypes = [
     name: "MD5",
   },
 ];
-const srcs = {
-  emailRep: {
-    type: "email",
-    path: "analyzers.webAnalyzers.emailRep",
-    className: "EmailRepClass",
-  },
-  robtex: {
-    type: "observable",
-    path: "analyzers.webAnalyzers.robtex",
-    className: "Robtex",
-  },
-  geoIP2: {
-    type: "ip",
-    path: "analyzers.webAnalyzers.geoIP2",
-    className: "GeoIP2",
-    accountID: 771503,
-    key: "fKh4TiE6RFjEKDo9",
-  },
-  abuseIPDB: {
-    type: "ip",
-    path: "analyzers.webAnalyzers.abuseIPDB",
-    className: "AbuseIPDB",
-    key: "02241dd0b2496a7dcc6ae14ec1791d8c4cb29cdc1ee5207ad82ab96cc4721a17b931a6420003a2a0",
-  },
-  honeyDB: {
-    type: "ip",
-    path: "analyzers.webAnalyzers.honeyDB",
-    className: "HoneyDB",
-    id: "2a7247b71a923763bb17dbf0185320742a972f64e5757ef9c0d5fe9918e4ec7c",
-    key: "d72b1b4ff45ab4ba4284f62d6190963fbb88f2578974f02a5e7b6dbf0c24ee6d",
-  },
-  threatMiner: {
-    type: "ip",
-    path: "analyzers.webAnalyzers.threatMiner",
-    className: "ThreatMiner",
-  },
-  virusTotal: {
-    type: "observable",
-    path: "analyzers.webAnalyzers.virusTotal",
-    className: "VirusTotal",
-    key: "45191dd08477e7c7ce89a32e4b7e8f46a6848fde192e9480ce67fa9872c9f2b2",
-  },
-  stringsifter: {
-    type: "file",
-    path: "analyzers.dockerAnalyzers.stringsifter",
-    className: "StringSifter",
-  },
-};
 export default function Investigate() {
   const { isLoading, mutateAsync } = useMutation(analyzeRequest, {
     onSuccess: (d) => {
@@ -143,24 +99,32 @@ export default function Investigate() {
       toast.error("Unable to fetch data. Try Again!");
     },
   });
+  const {isAnalyzersLoading} =  useQuery(['all-analyzers'],getAnalyzers,{
+    onSuccess:(d)=>{
+      setSrcs(d)
+    },
+    onError:(e)=>{
+      console.log(e)
+    }
+  })
   const router = useRouter();
   const ic = router.query?.slug?.[0];
 
   const [ioc, setIoc] = useState(ic ? ic : "");
   const [iocType, setIocType] = useState("ip");
+  const [srcs,setSrcs] = useState([])
   const sources = useMemo(() => {
     let srcList = [];
     for (const property in srcs) {
       console.log(`${property}: ${srcs[property]}`);
       if (
-        srcs[property].type === iocType ||
-        srcs[property].type === "observable"
+        srcs[property].type.includes(iocType) 
       ) {
         srcList.push(property);
       }
     }
     return srcList;
-  }, [iocType]);
+  }, [iocType,srcs]);
   console.log("s", sources);
   const [selectedSources, setSelectedSources] = useState([]);
   console.log(selectedSources);
@@ -288,7 +252,7 @@ export default function Investigate() {
             marginTop: "5px",
           }}
         >
-          <InputLabel id="demo-simple-select-label">Select Sorces</InputLabel>
+          <InputLabel id="demo-simple-select-label">Select Sources</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"

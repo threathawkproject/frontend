@@ -3,6 +3,8 @@ import DashboardLayout from "../../components/layout/dashboard-layout";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Switch } from "@mui/material";
 import toast from "react-hot-toast";
+
+
 const analyzers = {
   emailRep: {
     type: "email",
@@ -51,6 +53,8 @@ const analyzers = {
     className: "StringSifter",
   },
 };
+
+
 
 export default function DashboardHome() {
   const analyzersList = [];
