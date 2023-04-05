@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import DashboardLayout from "../../../components/layout/dashboard-layout";
 import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import {
@@ -13,6 +13,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Button,
 } from "@mui/material";
 import { useState } from "react";
 import { Search, Visibility } from "@mui/icons-material";
@@ -23,6 +24,7 @@ import { toast } from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
 import { InvestigationGraph } from "../../../components/graph/InvestigationGraph";
+import { FileUpload } from "@mui/icons-material";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -43,20 +45,33 @@ const MenuProps = {
   },
   variant: "menu",
 };
-const analyzeRequest = async (postData) => {
-  const form = new FormData()
-  form.append('form',JSON.stringify(postData))
-  const resp = await axios.post("http://127.0.0.1:8080/analyze", form,{
-    headers:{
-      'Content-Type':'multipart/form-data'
-    }
-  });
-  return resp.data;
+const analyzeRequest = async (postData, isFile = false, file = null) => {
+  const form = new FormData();
+  if (isFile) {
+    form.append("form", JSON.stringify({ ...postData, ioc: "" }));
+    form.append("file", file, file?.name);
+    const resp = await axios.post("http://127.0.0.1:8080/analyze", form, {
+      headers: {
+        ...form.getHeaders(),
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return resp.data;
+  } else {
+    form.append("form", JSON.stringify(postData));
+    const resp = await axios.post("http://127.0.0.1:8080/analyze", form, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return resp.data;
+  }
 };
-const getAnalyzers = async ()=>{
+const getAnalyzers = async () => {
   const resp = await axios.get("http://127.0.0.1:8080/analyzers");
   return resp.data;
-}
+};
 
 const iocTypes = [
   {
@@ -105,32 +120,33 @@ export default function Investigate() {
       toast.error("Unable to fetch data. Try Again!");
     },
   });
-  const {isAnalyzersLoading} =  useQuery(['all-analyzers'],getAnalyzers,{
-    onSuccess:(d)=>{
-      setSrcs(d)
+  const { isAnalyzersLoading } = useQuery(["all-analyzers"], getAnalyzers, {
+    onSuccess: (d) => {
+      setSrcs(d);
     },
-    onError:(e)=>{
-      console.log(e)
-    }
-  })
+    onError: (e) => {
+      console.log(e);
+    },
+  });
   const router = useRouter();
   const ic = router.query?.slug?.[0];
 
   const [ioc, setIoc] = useState(ic ? ic : "");
   const [iocType, setIocType] = useState("ip");
-  const [srcs,setSrcs] = useState([])
+  const [srcs, setSrcs] = useState([]);
+  const [fileName, setFileName] = useState("");
+  const [file, setFile] = useState();
+  const fileUploadRef = useRef(null);
   const sources = useMemo(() => {
     let srcList = [];
     for (const property in srcs) {
       console.log(`${property}: ${srcs[property]}`);
-      if (
-        srcs[property].type.includes(iocType) 
-      ) {
+      if (srcs[property].type.includes(iocType)) {
         srcList.push(property);
       }
     }
     return srcList;
-  }, [iocType,srcs]);
+  }, [iocType, srcs]);
   console.log("s", sources);
   const [selectedSources, setSelectedSources] = useState([]);
   console.log(selectedSources);
@@ -158,7 +174,7 @@ export default function Investigate() {
 
     console.log("Post Data", postData);
     toast.loading("Performing Enrichment");
-    mutateAsync(postData)
+    mutateAsync(postData, iocType === "file" ? true : false, file)
       .then(() => {
         toast.dismiss();
         toast.success("Enriched " + iocType);
@@ -186,6 +202,16 @@ export default function Investigate() {
   const handleSelectSources = (e) => {
     setSelectedSources(e.target.value);
   };
+  const handleSelectFile = () => {
+    fileUploadRef.current.click();
+  };
+  const handleUploadFile = (e, file) => {
+    if (e.target.files) {
+      console.log("File", e.target.files[0]);
+      setFileName(e.target.files[0].name);
+      setFile(e.target.files[0]);
+    }
+  };
   return (
     <Box>
       <Box
@@ -204,31 +230,69 @@ export default function Investigate() {
             marginTop: "50px",
           }}
         >
-          <TextField
-            sx={{
-              width: "600px",
-              marginRight: "5px",
-            }}
-            autoFocus
-            margin="dense"
-            name="ioc"
-            value={ioc}
-            onChange={handleChange}
-            label="IOC"
-            type="text"
-            variant="outlined"
-            InputProps={{
-              endAdornment: (
-                <IconButton onClick={analyze}>
-                  <Search
-                    sx={{
-                      color: "darkgray",
-                    }}
-                  />
-                </IconButton>
-              ),
-            }}
-          />
+          {iocType === "file" ? (
+            <Box
+              sx={{
+                width: "600px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingRight: "10px",
+              }}
+            >
+              <Button
+                onClick={handleSelectFile}
+                endIcon={<FileUpload />}
+                variant="outlined"
+                color="primary"
+              >
+                Upload File
+              </Button>
+              <input
+                style={{
+                  display: "none",
+                }}
+                onChange={handleUploadFile}
+                ref={fileUploadRef}
+                type="file"
+              />
+              <p>{fileName}</p>
+              <Button variant="outlined">
+                <Search
+                  sx={{
+                    color: "blue",
+                  }}
+                  onClick={analyze}
+                />
+              </Button>
+            </Box>
+          ) : (
+            <TextField
+              sx={{
+                width: "600px",
+                marginRight: "5px",
+              }}
+              autoFocus
+              margin="dense"
+              name="ioc"
+              value={ioc}
+              onChange={handleChange}
+              label="IOC"
+              type="text"
+              variant="outlined"
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={analyze}>
+                    <Search
+                      sx={{
+                        color: "darkgray",
+                      }}
+                    />
+                  </IconButton>
+                ),
+              }}
+            />
+          )}
           <FormControl
             sx={{
               width: "120px",
