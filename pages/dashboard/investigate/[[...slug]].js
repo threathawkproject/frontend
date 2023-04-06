@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
+import { useRouter } from "next/router";
 import DashboardLayout from "../../../components/layout/dashboard-layout";
-import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+//MUI Components
 import {
   TextField,
   IconButton,
@@ -14,17 +15,26 @@ import {
   MenuItem,
   Select,
   Button,
+  Tabs,
+  Tab,
+  Box,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
-import { useState } from "react";
-import { Search, Visibility } from "@mui/icons-material";
+//MUI Icons
+import { Search, Visibility, FileUpload } from "@mui/icons-material";
+//axios
 import axios from "axios";
-import { useRouter } from "next/router";
+//React Query Hooks
 import { useMutation, useQuery } from "@tanstack/react-query";
+//Toast
 import { toast } from "react-hot-toast";
-import { CircularProgress } from "@mui/material";
 import { useMemo } from "react";
 import { InvestigationGraph } from "../../../components/graph/InvestigationGraph";
-import { FileUpload } from "@mui/icons-material";
+import ResultsDisplay from "../../../components/enrichment/ResultsDisplay";
+
+//Menu Props For Multi Select
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -45,6 +55,9 @@ const MenuProps = {
   },
   variant: "menu",
 };
+
+//Request Functions
+//Perform Enrichment
 const analyzeRequest = async (postData, isFile = false, file = null) => {
   const form = new FormData();
   if (isFile) {
@@ -68,11 +81,14 @@ const analyzeRequest = async (postData, isFile = false, file = null) => {
     return resp.data;
   }
 };
+
+//Get a list of all analyzers
 const getAnalyzers = async () => {
   const resp = await axios.get("http://127.0.0.1:8080/analyzers");
   return resp.data;
 };
 
+//List of all IOC Types
 const iocTypes = [
   {
     value: "ip",
@@ -107,47 +123,64 @@ const iocTypes = [
     name: "MD5",
   },
 ];
+
+//Enrichment Page
 export default function Investigate() {
+  //Get Selected IOC From the query params
+  const router = useRouter();
+  const ic = router.query?.slug?.[0];
+
+  //Page State
+  //Current IOC
+  const [ioc, setIoc] = useState(ic ? ic : "");
+  //Selected IOC Type
+  const [iocType, setIocType] = useState("ip");
+  //Sources Object Returned from API
+  const [srcs, setSrcs] = useState([]);
+  //Selected File Name for IOC Type "file"
+  const [fileName, setFileName] = useState("");
+  //Selected File for IOC Type "file"
+  const [file, setFile] = useState();
+  //Current Tab Value
+  const [tab, setTab] = useState(0);
+  //react-query's useMutation for handling POST request of enrichment: i.e analyzeRequest function defined above
   const { isLoading, mutateAsync } = useMutation(analyzeRequest, {
+    //if request is successful
     onSuccess: (d) => {
       toast.success("Data Fetched");
       if (d) setData(d);
       else setData({});
       console.log("Data", d);
     },
+    //if request is not successful
     onError: (e) => {
       console.log("error", e);
       toast.error("Unable to fetch data. Try Again!");
     },
   });
+  ////react-query's useMutation for handling POST request to get all analyzers: i.e getAnalyzers function defined above
   const { isAnalyzersLoading } = useQuery(["all-analyzers"], getAnalyzers, {
+    //if request is successful
     onSuccess: (d) => {
       setSrcs(d);
     },
+    //if request is not successful
     onError: (e) => {
       console.log(e);
     },
   });
-  const router = useRouter();
-  const ic = router.query?.slug?.[0];
 
-  const [ioc, setIoc] = useState(ic ? ic : "");
-  const [iocType, setIocType] = useState("ip");
-  const [srcs, setSrcs] = useState([]);
-  const [fileName, setFileName] = useState("");
-  const [file, setFile] = useState();
   const fileUploadRef = useRef(null);
   const sources = useMemo(() => {
     let srcList = [];
     for (const property in srcs) {
       console.log(`${property}: ${srcs[property]}`);
       if (srcs[property].type.includes(iocType)) {
-        srcList.push(property);
+        srcList.push({ ...srcs[property], value: property });
       }
     }
     return srcList;
   }, [iocType, srcs]);
-  console.log("s", sources);
   const [selectedSources, setSelectedSources] = useState([]);
   console.log(selectedSources);
   const handleChange = (e) => {
@@ -211,6 +244,9 @@ export default function Investigate() {
       setFileName(e.target.files[0].name);
       setFile(e.target.files[0]);
     }
+  };
+  const handleChangeTab = (event, newValue) => {
+    setTab(newValue);
   };
   return (
     <Box>
@@ -335,17 +371,20 @@ export default function Investigate() {
           >
             {sources.map((source, index) => {
               return (
-                <MenuItem value={source} key={index}>
+                <MenuItem value={source.value} key={index}>
                   <ListItemIcon>
-                    <Checkbox checked={selectedSources.includes(source)} />
+                    <Checkbox
+                      checked={selectedSources.includes(source.value)}
+                    />
                   </ListItemIcon>
-                  <ListItemText>{source}</ListItemText>
+                  <ListItemText>{source.name}</ListItemText>
                 </MenuItem>
               );
             })}
           </Select>
         </FormControl>
       </Box>
+      <Box sx={{ width: "95%", margin: "20px" }}></Box>
       <Box
         sx={{
           marginTop: "30px",
@@ -355,85 +394,52 @@ export default function Investigate() {
           alignItems: "center",
         }}
       >
-        {selectedSources.map((source, index) => {
-          return (
-            <ResultsDisplay
-              isIncluded={selectedSources.includes(source)}
-              source={source}
-              key={index}
-              data={data}
-              isLoading={isLoading}
-            />
-          );
-        })}
-        <div
-          style={{
-            border: "2px dashed #C1C1C2",
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: "divider",
+            width: "96%",
+            marginBottom: "10px",
           }}
         >
-          <InvestigationGraph />
-        </div>
+          <Tabs
+            value={tab}
+            onChange={handleChangeTab}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Details" />
+            <Tab label="Graph View" />
+          </Tabs>
+        </Box>
+        {tab === 0 ? (
+          selectedSources.map((source, index) => {
+            return (
+              <ResultsDisplay
+                isIncluded={selectedSources.includes(source.value)}
+                source={source}
+                srcs={srcs}
+                key={index}
+                data={data}
+                isLoading={isLoading}
+              />
+            );
+          })
+        ) : (
+          <div
+            style={{
+              border: "2px dashed #C1C1C2",
+            }}
+          >
+            <InvestigationGraph />
+          </div>
+        )}
+
+        {/* */}
       </Box>
     </Box>
   );
 }
 
-const ResultsDisplay = (props) => {
-  const source = props.source;
-  const data = props.data;
-  const isIncluded = props.isIncluded;
-  const isLoading = props.isLoading;
-  const [expanded, setExpanded] = React.useState(false);
-  const handleChangePanel = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
-  return (
-    <Accordion
-      sx={{
-        width: "90%",
-      }}
-      expanded={expanded === "panel1"}
-      onChange={handleChangePanel("panel1")}
-    >
-      <AccordionSummary
-        expandIcon={<Visibility />}
-        aria-controls="panel1bh-content"
-        id="panel1bh-header"
-      >
-        <Typography sx={{ width: "33%", flexShrink: 0 }}>
-          <b>{source}</b>
-        </Typography>
-        <Typography sx={{ color: "text.secondary" }}>
-          {isIncluded && isLoading ? (
-            <CircularProgress size="1.5rem" />
-          ) : data[source] ? (
-            "Data Fetched"
-          ) : (
-            "No Data"
-          )}
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails
-        sx={{
-          maxHeight: "400px",
-          overflowY: "scroll",
-        }}
-      >
-        <Typography>
-          {data[source] && (
-            <pre
-              style={{
-                maxWidth: "100px",
-              }}
-            >
-              {JSON.stringify(data[source], null, 2)}
-            </pre>
-          )}
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
-  );
-};
 Investigate.getLayout = function getLayout(page) {
   return <DashboardLayout>{page}</DashboardLayout>;
 };

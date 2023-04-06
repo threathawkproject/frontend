@@ -65,7 +65,7 @@ export const SidebarDashboard = () => {
   return (
     <Box
       sx={{
-        width: "25%",
+        minWidth: "360px",
         height: "100vh",
         background: "#F6F5FA",
         borderRight: "1px solid rgba(191, 195, 203, 0.25)",
