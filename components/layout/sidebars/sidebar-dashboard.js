@@ -12,6 +12,7 @@ import {
   Notifications,
   LibraryBooks,
   Settings,
+  DiamondOutlined,
 } from "@mui/icons-material";
 const menuItems = [
   {
@@ -21,6 +22,11 @@ const menuItems = [
   },
   {
     title: "Enrichment",
+    icon: DiamondOutlined,
+    route: "/dashboard/enrich",
+  },
+  {
+    title: "Investigate",
     icon: Search,
     route: "/dashboard/investigate",
   },

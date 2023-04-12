@@ -1,0 +1,589 @@
+{
+  "type": "bundle",
+  "id": "bundle--9ae7c64b-3600-40ac-9962-7ac0a899ddfd",
+  "objects": [
+    {
+      "type": "indicator",
+      "spec_version": "2.1",
+      "id": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "created": "2023-04-11T18:16:33.773377Z",
+      "modified": "2023-04-11T18:16:33.773377Z",
+      "name": "1.179.185.50",
+      "pattern": "[ipv4-addr:value = '1.179.185.50']",
+      "pattern_type": "stix",
+      "pattern_version": "2.1",
+      "valid_from": "2023-04-11T18:16:33.773377Z"
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--01dfac6d-04e1-4e1f-b8b4-393ff33f4139",
+      "created": "2023-04-11T18:18:55.018588Z",
+      "modified": "2023-04-11T18:18:55.018588Z",
+      "name": "Credential Stuffing",
+      "description": "T1110.004 - Credential Stuffing",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1110.004" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--0c0302f7-72ed-414b-8b52-b1155c778479",
+      "created": "2023-04-11T18:18:59.103544Z",
+      "modified": "2023-04-11T18:18:59.103544Z",
+      "name": "File and Directory Discovery",
+      "description": "T1083 - File and Directory Discovery",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1083" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--284329ef-c953-46bc-bb88-e072937e1558",
+      "created": "2023-04-11T18:18:50.952317Z",
+      "modified": "2023-04-11T18:18:50.952317Z",
+      "name": "Brute Force",
+      "description": "T1110 - Brute Force",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1110" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--34ab5fd9-7d45-4932-8fc6-f95992fc023e",
+      "created": "2023-04-11T18:19:23.601599Z",
+      "modified": "2023-04-11T18:19:23.601599Z",
+      "name": "Brute Force",
+      "description": "T1110 - Brute Force",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1110" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--37f7882c-7996-421e-854d-c8496a0d9600",
+      "created": "2023-04-11T18:19:11.333239Z",
+      "modified": "2023-04-11T18:19:11.333239Z",
+      "name": "Ingress Tool Transfer",
+      "description": "T1105 - Ingress Tool Transfer",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1105" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--4abb335a-a563-45fb-902c-cf9fc08524ce",
+      "created": "2023-04-11T18:19:07.269553Z",
+      "modified": "2023-04-11T18:19:07.269553Z",
+      "name": "Valid Accounts",
+      "description": "T1078 - Valid Accounts",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1078" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--a0979390-4e59-40d0-a9e2-9d526bb09d29",
+      "created": "2023-04-11T18:19:03.182621Z",
+      "modified": "2023-04-11T18:19:03.182621Z",
+      "name": "SSH Authorized Keys",
+      "description": "T1098.004 - SSH Authorized Keys",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1098.004" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--a56120cd-4230-4a84-8dcc-844fbd313b21",
+      "created": "2023-04-11T18:19:19.536866Z",
+      "modified": "2023-04-11T18:19:19.536866Z",
+      "name": "Brute Force",
+      "description": "T1110 - Brute Force",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1110" }
+      ]
+    },
+    {
+      "type": "attack-pattern",
+      "spec_version": "2.1",
+      "id": "attack-pattern--efd3dd77-fd0a-419a-81b1-c8017e4165ee",
+      "created": "2023-04-11T18:19:15.443982Z",
+      "modified": "2023-04-11T18:19:15.443982Z",
+      "name": "Credential Stuffing",
+      "description": "T1110.004 - Credential Stuffing",
+      "external_references": [
+        { "source_name": "ATT&CK", "external_id": "T1110.004" }
+      ]
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--0f1d026a-2e22-46fa-b8ee-5826d352d872",
+      "created": "2023-04-11T18:18:01.887712Z",
+      "modified": "2023-04-11T18:18:01.887712Z",
+      "name": "Czechia",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Czechia"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--243ef466-b5c1-4918-b478-09e0a4687765",
+      "created": "2023-04-11T18:17:53.662707Z",
+      "modified": "2023-04-11T18:17:53.662707Z",
+      "name": "Ukraine",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Ukraine"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--2bb49d7e-330e-4922-bb35-cbc2d38a1833",
+      "created": "2023-04-11T18:17:57.758923Z",
+      "modified": "2023-04-11T18:17:57.758923Z",
+      "name": "Romania",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Romania"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--2e99144c-ef56-43d3-bd50-fedd1bd75cb0",
+      "created": "2023-04-11T18:18:14.127107Z",
+      "modified": "2023-04-11T18:18:14.127107Z",
+      "name": "Lithuania",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Lithuania"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--2fc83e84-2667-49ee-94b6-abe3c2868cfa",
+      "created": "2023-04-11T18:18:30.525036Z",
+      "modified": "2023-04-11T18:18:30.525036Z",
+      "name": "Germany",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Germany"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--5addc062-c911-4cee-8f46-bb58ddffe09b",
+      "created": "2023-04-11T18:17:45.509079Z",
+      "modified": "2023-04-11T18:17:45.509079Z",
+      "name": "United States of America",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "United States of America"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--66ff73f1-49c8-4cf8-a64d-e64000d8ae38",
+      "created": "2023-04-11T18:18:18.217553Z",
+      "modified": "2023-04-11T18:18:18.217553Z",
+      "name": "Estonia",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Estonia"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--812db545-cb72-4425-9fb5-912d73be2614",
+      "created": "2023-04-11T18:18:34.621842Z",
+      "modified": "2023-04-11T18:18:34.621842Z",
+      "name": "Canada",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Canada"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--a8e6a5d9-1796-4f37-93d6-7dbb04438112",
+      "created": "2023-04-11T18:18:42.783294Z",
+      "modified": "2023-04-11T18:18:42.783294Z",
+      "name": "Denmark",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Denmark"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--af9c477b-7b73-4bc2-bf87-41a46c77acf0",
+      "created": "2023-04-11T18:18:22.346031Z",
+      "modified": "2023-04-11T18:18:22.346031Z",
+      "name": "Latvia",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Latvia"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--b6c4f77c-1dac-46f5-9407-893c92bdf9f0",
+      "created": "2023-04-11T18:18:46.865334Z",
+      "modified": "2023-04-11T18:18:46.865334Z",
+      "name": "Singapore",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Singapore"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--b7a0c884-3955-422a-b447-7e27799d7c0b",
+      "created": "2023-04-11T18:17:49.57661Z",
+      "modified": "2023-04-11T18:17:49.57661Z",
+      "name": "Turkey",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Turkey"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--c725ecf7-4bab-4346-9a8e-19b179537835",
+      "created": "2023-04-11T18:18:26.442573Z",
+      "modified": "2023-04-11T18:18:26.442573Z",
+      "name": "Poland",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Poland"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--c76bf7f7-9051-441d-a345-8adbc13326a5",
+      "created": "2023-04-11T18:18:38.708796Z",
+      "modified": "2023-04-11T18:18:38.708796Z",
+      "name": "France",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "France"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--db6f0a9d-ec88-40c6-9ea4-11308d1b76ab",
+      "created": "2023-04-11T18:28:18.160681Z",
+      "modified": "2023-04-11T18:28:18.160681Z",
+      "name": "United States of America",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "United States of America"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--def30a22-1b59-4655-ab0f-03e755756e97",
+      "created": "2023-04-11T18:18:05.984419Z",
+      "modified": "2023-04-11T18:18:05.984419Z",
+      "name": "United Kingdom of Great Britain and Northern Ireland",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "United Kingdom of Great Britain and Northern Ireland"
+    },
+    {
+      "type": "location",
+      "spec_version": "2.1",
+      "id": "location--ebe681ed-8f21-4b8b-b4c9-83c0230dae6f",
+      "created": "2023-04-11T18:18:10.047013Z",
+      "modified": "2023-04-11T18:18:10.047013Z",
+      "name": "Norway",
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "country": "Norway"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--15599c85-f3ef-4130-be0e-e49a40e3a311",
+      "created": "2023-04-11T18:18:57.055328Z",
+      "modified": "2023-04-11T18:18:57.055328Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--01dfac6d-04e1-4e1f-b8b4-393ff33f4139"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--1a86b7ba-8bbe-45f9-8ab7-baa5f95d84fd",
+      "created": "2023-04-11T18:18:12.080223Z",
+      "modified": "2023-04-11T18:18:12.080223Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--ebe681ed-8f21-4b8b-b4c9-83c0230dae6f"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--25b51b24-62d5-47e3-98ab-e3696d04efc0",
+      "created": "2023-04-11T18:19:17.488946Z",
+      "modified": "2023-04-11T18:19:17.488946Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--efd3dd77-fd0a-419a-81b1-c8017e4165ee"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--2f3daa59-3f61-42c2-b2a7-a6b255edb6b0",
+      "created": "2023-04-11T18:18:52.979103Z",
+      "modified": "2023-04-11T18:18:52.979103Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--284329ef-c953-46bc-bb88-e072937e1558"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--321d7f75-1944-4b68-8f96-d8cfbdbdd8d4",
+      "created": "2023-04-11T18:19:21.558697Z",
+      "modified": "2023-04-11T18:19:21.558697Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--a56120cd-4230-4a84-8dcc-844fbd313b21"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--38ef7a9e-9653-4ac6-9796-5c760956c2bd",
+      "created": "2023-04-11T18:19:05.215612Z",
+      "modified": "2023-04-11T18:19:05.215612Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--a0979390-4e59-40d0-a9e2-9d526bb09d29"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--3bf95636-a89b-42e5-808a-8e264152b842",
+      "created": "2023-04-11T18:17:47.539758Z",
+      "modified": "2023-04-11T18:17:47.539758Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--5addc062-c911-4cee-8f46-bb58ddffe09b"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--496db936-7aaf-4ec0-b59d-5da9977f4cd6",
+      "created": "2023-04-11T18:18:16.167346Z",
+      "modified": "2023-04-11T18:18:16.167346Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--2e99144c-ef56-43d3-bd50-fedd1bd75cb0"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--4fcc2c04-950c-48ca-84a5-9c7afdefd0a6",
+      "created": "2023-04-11T18:28:20.201835Z",
+      "modified": "2023-04-11T18:28:20.201835Z",
+      "relationship_type": "indicates",
+      "source_ref": "domain-name--7b1a703a-c6fa-5143-9f13-cf614f24eded",
+      "target_ref": "location--db6f0a9d-ec88-40c6-9ea4-11308d1b76ab"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--56d358e6-4a43-4a82-b0ee-80f29e3a24f6",
+      "created": "2023-04-11T18:19:13.391655Z",
+      "modified": "2023-04-11T18:19:13.391655Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--37f7882c-7996-421e-854d-c8496a0d9600"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--5ba22eb6-b4d7-416e-9276-f13ef9d548b9",
+      "created": "2023-04-11T18:17:55.702691Z",
+      "modified": "2023-04-11T18:17:55.702691Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--243ef466-b5c1-4918-b478-09e0a4687765"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6ee591db-3a93-4eb1-856e-0ceba190da0d",
+      "created": "2023-04-11T18:18:28.499484Z",
+      "modified": "2023-04-11T18:18:28.499484Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--c725ecf7-4bab-4346-9a8e-19b179537835"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6f134bfe-140e-4c19-96b5-0a136812bd14",
+      "created": "2023-04-11T18:18:08.01393Z",
+      "modified": "2023-04-11T18:18:08.01393Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--def30a22-1b59-4655-ab0f-03e755756e97"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--6f88ba4a-2d9d-46c2-82bb-154cfc062e45",
+      "created": "2023-04-11T18:18:20.275644Z",
+      "modified": "2023-04-11T18:18:20.275644Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--66ff73f1-49c8-4cf8-a64d-e64000d8ae38"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--7a784c37-95b0-42d9-86ab-5fa3befd07bd",
+      "created": "2023-04-11T18:18:44.830937Z",
+      "modified": "2023-04-11T18:18:44.830937Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--a8e6a5d9-1796-4f37-93d6-7dbb04438112"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--962e59a7-c23e-4f43-92ac-4ff2f4ba9147",
+      "created": "2023-04-11T18:23:41.238867Z",
+      "modified": "2023-04-11T18:23:41.238867Z",
+      "relationship_type": "domain of",
+      "source_ref": "domain-name--7b1a703a-c6fa-5143-9f13-cf614f24eded",
+      "target_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--aa1cbde7-6888-48f3-bcc1-fe59c94eea76",
+      "created": "2023-04-11T18:18:03.944492Z",
+      "modified": "2023-04-11T18:18:03.944492Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--0f1d026a-2e22-46fa-b8ee-5826d352d872"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--ab1d86d0-1831-4b7c-9972-a7724c9d5505",
+      "created": "2023-04-11T18:18:32.565055Z",
+      "modified": "2023-04-11T18:18:32.565055Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--2fc83e84-2667-49ee-94b6-abe3c2868cfa"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--b28be873-2d23-4687-af53-1d04e9a23582",
+      "created": "2023-04-11T18:19:09.306997Z",
+      "modified": "2023-04-11T18:19:09.306997Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--4abb335a-a563-45fb-902c-cf9fc08524ce"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--bec06457-fda8-4265-bc0a-9dda08ef0c54",
+      "created": "2023-04-11T18:18:48.918147Z",
+      "modified": "2023-04-11T18:18:48.918147Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--b6c4f77c-1dac-46f5-9407-893c92bdf9f0"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--bfa71cfa-9532-424f-9d21-08e9206de442",
+      "created": "2023-04-11T18:18:40.738614Z",
+      "modified": "2023-04-11T18:18:40.738614Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--c76bf7f7-9051-441d-a345-8adbc13326a5"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--d465485f-5fbf-4de8-af3d-58df525cc780",
+      "created": "2023-04-11T18:17:51.621899Z",
+      "modified": "2023-04-11T18:17:51.621899Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--b7a0c884-3955-422a-b447-7e27799d7c0b"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--e1004e74-edb4-477c-9b7f-d059029fa350",
+      "created": "2023-04-11T18:19:25.637168Z",
+      "modified": "2023-04-11T18:19:25.637168Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--34ab5fd9-7d45-4932-8fc6-f95992fc023e"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--e7c202d9-e09e-434a-a614-71042d1ada3d",
+      "created": "2023-04-11T18:18:24.38857Z",
+      "modified": "2023-04-11T18:18:24.38857Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--af9c477b-7b73-4bc2-bf87-41a46c77acf0"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--e8051c55-febf-4f2c-b60b-e9f2816db9f9",
+      "created": "2023-04-11T18:19:01.149675Z",
+      "modified": "2023-04-11T18:19:01.149675Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "attack-pattern--0c0302f7-72ed-414b-8b52-b1155c778479"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--f444bf38-3e17-4e1a-af21-143a45f7c8c5",
+      "created": "2023-04-11T18:17:59.824843Z",
+      "modified": "2023-04-11T18:17:59.824843Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--2bb49d7e-330e-4922-bb35-cbc2d38a1833"
+    },
+    {
+      "type": "relationship",
+      "spec_version": "2.1",
+      "id": "relationship--fcc59dd6-44e2-4e31-ab66-e95f346efbe1",
+      "created": "2023-04-11T18:18:36.661983Z",
+      "modified": "2023-04-11T18:18:36.661983Z",
+      "relationship_type": "indicates",
+      "source_ref": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
+      "target_ref": "location--812db545-cb72-4425-9fb5-912d73be2614"
+    },
+    {
+      "type": "domain-name",
+      "spec_version": "2.1",
+      "id": "domain-name--7b1a703a-c6fa-5143-9f13-cf614f24eded",
+      "value": "tot.co.th"
+    }
+  ]
+}

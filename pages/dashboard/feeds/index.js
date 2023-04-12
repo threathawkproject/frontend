@@ -16,7 +16,7 @@ import {
   Paper,
   InputAdornment,
   Stack,
-  Pagination
+  Pagination,
 } from "@mui/material";
 import axios from "axios";
 import { ClassificationPieChart } from "../../../components/feeds/classification-pie-chart";
@@ -29,33 +29,32 @@ import { Search } from "@mui/icons-material";
 export default function Feeds() {
   const router = useRouter();
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [count,setCount] = useState(1)
+  const [count, setCount] = useState(1);
   const [search, setSearch] = useState("");
-  const [iocs,setIocs] = useState([])
- 
+  const [iocs, setIocs] = useState([]);
+
   const handleChangePage = (event, newPage) => {
-    fetchIOCs(newPage)
+    fetchIOCs(newPage);
   };
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
 
-  
-  const fetchIOCs = async(page=1)=>{
-    try{
-      const response = await axios.get(`http://localhost:8000/api/ioc_feeds?page=${page}`)
-      console.log("IOCS",response.data)
-      setIocs(response.data.results)
-      setCount(Math.ceil(response.data.count/10))
-
-    }catch(e)
-    {
-      console.log(e)
-    } 
-  }
-  useEffect(()=>{
-    fetchIOCs()
-  },[])
+  const fetchIOCs = async (page = 1) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/ioc_feeds?page=${page}`
+      );
+      console.log("IOCS", response.data);
+      setIocs(response.data.results);
+      setCount(Math.ceil(response.data.count / 10));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    fetchIOCs();
+  }, []);
 
   return (
     <Box
@@ -73,7 +72,7 @@ export default function Feeds() {
         <NewIndicatorCards />
         <SourcePieChart />
       </div>
-      <Card sx={{ margin:"80px 0px" }}>
+      <Card sx={{ margin: "80px 0px" }}>
         <Paper sx={{ minWidth: 400, maxHeight: "430px", overflowY: "scroll" }}>
           <Box sx={{ margin: "5px 20px" }}>
             {/* <TextField
@@ -123,9 +122,7 @@ export default function Feeds() {
                       },
                     }}
                     onClick={() => {
-                      router.push(
-                        "investigate/" + encodeURIComponent(data.ioc)
-                      );
+                      router.push("enrich/" + encodeURIComponent(data.ioc));
                     }}
                   >
                     <TableCell>{data.sources[0]}</TableCell>
@@ -162,17 +159,15 @@ export default function Feeds() {
               </TableRow> */}
             </TableFooter>
           </Table>
-          
         </Paper>
         <Stack spacing={2} alignItems="center" justifyContent={"center"}>
-        <Pagination
-        count={count}
-        onChange={handleChangePage}
-        shape="rounded"
-        />
+          <Pagination
+            count={count}
+            onChange={handleChangePage}
+            shape="rounded"
+          />
         </Stack>
       </Card>
-
     </Box>
   );
 }

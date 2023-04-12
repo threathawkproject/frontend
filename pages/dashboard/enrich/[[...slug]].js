@@ -5,6 +5,9 @@ import DashboardLayout from "../../../components/layout/dashboard-layout";
 import {
   TextField,
   IconButton,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Typography,
   Checkbox,
   FormControl,
@@ -12,7 +15,10 @@ import {
   MenuItem,
   Select,
   Button,
+  Tabs,
+  Tab,
   Box,
+  ListItem,
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
@@ -25,9 +31,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 //Toast
 import { toast } from "react-hot-toast";
 import { useMemo } from "react";
-import { InvestigationGraph } from "../../../components/investigation/InvestigationGraph";
-// import { EnrichmentGraph } from "../../../components/graph/EnrichmentGraph";
-// import ResultsDisplay from "../../../components/enrichment/ResultsDisplay";
+import { EnrichmentGraph } from "../../../components/graph/EnrichmentGraph";
+import ResultsDisplay from "../../../components/enrichment/ResultsDisplay";
 
 //Menu Props For Multi Select
 const ITEM_HEIGHT = 48;
@@ -52,39 +57,23 @@ const MenuProps = {
 };
 
 //Request Functions
-//Perform Investigation
-
-const investigate = async (payload, selected_analyzers) => {
-  let data = {};
-  try {
-    const response = await axios.post(
-      "http://localhost:8082/create_investigation",
-      payload
-    );
-    try {
-      const { file_path, root_node_id } = response.data;
-      const response2 = await axios.post("http://localhost:8082/investigate", {
-        file_path: file_path,
-        enrichment: {
-          node_id: root_node_id,
-          ioc: payload.data.value,
-          type: payload.data.type === "ipv4" ? "ip" : payload.data.type,
-          selected_analyzers: payload.selected_analyzers || [],
-        },
-      });
-      try {
-        const response3 = await axios.post("http://localhost:8082/display", {
-          file_path: file_path,
-        });
-        return response3.data;
-      } catch (e) {
-        throw new Error(e);
-      }
-    } catch (e) {
-      throw new Error(e);
-    }
-  } catch (e) {
-    throw new Error(e);
+//Perform Enrichment
+const analyzeRequest = async (postData, isFile = false, file = null) => {
+  const form = new FormData();
+  if (isFile) {
+    form.append("form", JSON.stringify({ ...postData, ioc: "" }));
+    form.append("file", file, file?.name);
+    const resp = await axios.post("http://127.0.0.1:8080/analyze", form, {
+      headers: {
+        ...form.getHeaders(),
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return resp.data;
+  } else {
+    const resp = await axios.post("http://127.0.0.1:8080/analyze", postData);
+    return resp.data;
   }
 };
 
@@ -147,22 +136,26 @@ export default function Enrich() {
   const [fileName, setFileName] = useState("");
   //Selected File for IOC Type "file"
   const [file, setFile] = useState();
+  //Current Tab Value
+  const [tab, setTab] = useState(0);
   //Selected sources/analyzers for enrichment
   const [selectedSources, setSelectedSources] = useState([]);
 
-  //react-query's useMutation for handling POST request of investigation: i.e investigate function defined above
-  const { isLoading, mutateAsync: mutateAsyncInvestigation } = useMutation(
-    investigate,
-    {
-      onSuccess: (d) => {
-        console.log("INVESTIGATIONNNNN", d);
-        setData(d);
-      },
-      onError: (e) => {
-        console.log("OH NOEEEEEEEEE", e);
-      },
-    }
-  );
+  //react-query's useMutation for handling POST request of enrichment: i.e analyzeRequest function defined above
+  const { isLoading, mutateAsync } = useMutation(analyzeRequest, {
+    //if request is successful
+    onSuccess: (d) => {
+      toast.success("Data Fetched");
+      if (d) setData(d);
+      else setData({});
+      console.log("Data", d);
+    },
+    //if request is not successful
+    onError: (e) => {
+      console.log("error", e);
+      toast.error("Unable to fetch data. Try Again!");
+    },
+  });
   ////react-query's useMutation for handling POST request to get all analyzers: i.e getAnalyzers function defined above
   const { isAnalyzersLoading } = useQuery(["all-analyzers"], getAnalyzers, {
     //if request is successful
@@ -199,7 +192,7 @@ export default function Enrich() {
     setSelectedSources([]);
     setIocType(e.target.value);
   };
-  const investigateIoc = () => {
+  const analyze = () => {
     let postData = {};
     console.log("v", validateEmail(ioc));
 
@@ -209,26 +202,22 @@ export default function Enrich() {
 
     console.log("IOC", iocToAnalyze);
     postData = {
-      type: "indicator",
-      data: {
-        value: ioc,
-        type: iocType === "ip" ? "ipv4" : iocType,
-      },
+      ioc: iocToAnalyze,
       selected_analyzers: selectedSources,
+      type: iocType,
     };
 
     console.log("Post Data", postData);
-    toast.loading("Performing Investigation");
-
-    mutateAsyncInvestigation(postData)
+    toast.loading("Performing Enrichment");
+    mutateAsync(postData, iocType === "file" ? true : false, file)
       .then(() => {
         toast.dismiss();
-        toast.success("Investigated " + iocType);
+        toast.success("Enriched " + iocType);
       })
       .catch((e) => {
         console.log(e);
         toast.dismiss();
-        toast.error("Could not perform investigation check logs for details");
+        toast.error("Could not perform enrichment check logs for details");
       });
   };
   function validateEmail(email) {
@@ -257,6 +246,9 @@ export default function Enrich() {
       setFileName(e.target.files[0].name);
       setFile(e.target.files[0]);
     }
+  };
+  const handleChangeTab = (event, newValue) => {
+    setTab(newValue);
   };
   return (
     <Box>
@@ -308,7 +300,7 @@ export default function Enrich() {
                   sx={{
                     color: "blue",
                   }}
-                  onClick={investigateIoc}
+                  onClick={analyze}
                 />
               </Button>
             </Box>
@@ -328,7 +320,7 @@ export default function Enrich() {
               variant="outlined"
               InputProps={{
                 endAdornment: (
-                  <IconButton onClick={investigateIoc}>
+                  <IconButton onClick={analyze}>
                     <Search
                       sx={{
                         color: "darkgray",
@@ -394,26 +386,62 @@ export default function Enrich() {
           </Select>
         </FormControl>
       </Box>
+      <Box sx={{ width: "95%", margin: "20px" }}></Box>
       <Box
         sx={{
-          height: "800px",
+          marginTop: "30px",
           width: "100%",
           display: "flex",
-          justifyContent: "center",
-          margin: "70px 0px",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
-            height: "100%",
-            width: "900px",
-            backgroundColor: "#FFFFFF",
-            borderRadius: "15px",
-            border: "2.5px solid rgba(191, 195, 203, 0.25)",
+            borderBottom: 1,
+            borderColor: "divider",
+            width: "96%",
+            marginBottom: "10px",
           }}
         >
-          <InvestigationGraph />
+          <Tabs
+            value={tab}
+            onChange={handleChangeTab}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Details" />
+            <Tab label="Graph View" />
+          </Tabs>
         </Box>
+        {tab === 0 ? (
+          selectedSources.map((source, index) => {
+            return (
+              <ResultsDisplay
+                isIncluded={selectedSources.includes(source.value)}
+                source={source}
+                srcs={srcs}
+                key={index}
+                data={data}
+                isLoading={isLoading}
+              />
+            );
+          })
+        ) : (
+          <div
+            style={{
+              height: "800px",
+              width: "98%",
+              border: "2px dashed #C1C1C2",
+              display: "flex",
+            }}
+          >
+            <div>
+              <EnrichmentGraph ioc={ioc} data={data} />
+            </div>
+          </div>
+        )}
+
+        {/* */}
       </Box>
     </Box>
   );

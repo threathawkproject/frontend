@@ -23,6 +23,7 @@ export default function DashboardLayout({ children }) {
           <Box
             sx={{
               flexGrow: "100",
+              backgroundColor: "#FCFBFF",
             }}
           >
             {children}

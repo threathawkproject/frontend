@@ -5,6 +5,7 @@ import {
   AccordionDetails,
   Typography,
 } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
 const ResultsDisplay = (props) => {

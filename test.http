@@ -1,0 +1,28 @@
+# POST http://localhost:8082/create_investigation
+
+# {
+#     "type": "indicator",
+#     "data": {
+#         "value": "1.179.185.50",
+#         "type": "ipv4"
+#     }
+# }
+
+
+POST http://localhost:8082/investigate
+
+{
+    "file_path": "./data/bigf",
+    "enrichment": {
+        "node_id": "indicator--4b9ada1c-e64e-46f6-914f-df10f05ea2fa",
+        "ioc": "1.179.185.50",
+        "type": "ip",
+        "selected_analyzers": ["alienVault"]
+    }
+}
+
+# POST http://localhost:8082/display
+
+# {
+#     "file_path":"./data/j7fj"
+# }
