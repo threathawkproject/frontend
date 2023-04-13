@@ -4,7 +4,7 @@ import config from "./config";
 import { Graph } from "react-d3-graph";
 import ReactCountryFlag from "react-country-flag";
 // import { graphData } from "../../utils/graphData";
-import CountryNode from "../graph-nodes/CountryNode";
+import EnrichmentNode from "../graph-nodes/EnrichmentNode";
 
 export const EnrichmentGraph = (props) => {
   const { data: graphData, ioc } = props;
@@ -43,7 +43,9 @@ export const EnrichmentGraph = (props) => {
           size: 300,
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <CountryNode countryCode={countryCode} />,
+          viewGenerator: (node) => (
+            <EnrichmentNode countryCode={"United States"} />
+          ),
         });
         newData.links.push({
           label: "Located In",
@@ -339,7 +341,7 @@ export const EnrichmentGraph = (props) => {
         y: centerY + radius * Math.sin(angleIncrement * 4),
         size: 300,
         viewGenerator: (node) => (
-          <CountryNode countryCode={graphData.geoIP2.country.iso_code} />
+          <EnrichmentNode countryCode={graphData.geoIP2.country.iso_code} />
         ),
       },
     ],

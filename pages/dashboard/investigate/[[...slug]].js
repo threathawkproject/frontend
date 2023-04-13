@@ -149,6 +149,10 @@ export default function Enrich() {
   const [file, setFile] = useState();
   //Selected sources/analyzers for enrichment
   const [selectedSources, setSelectedSources] = useState([]);
+  //Investigation Data
+  const [data, setData] = useState({
+    objects: [],
+  });
 
   //react-query's useMutation for handling POST request of investigation: i.e investigate function defined above
   const { isLoading, mutateAsync: mutateAsyncInvestigation } = useMutation(
@@ -211,7 +215,7 @@ export default function Enrich() {
     postData = {
       type: "indicator",
       data: {
-        value: ioc,
+        value: iocToAnalyze,
         type: iocType === "ip" ? "ipv4" : iocType,
       },
       selected_analyzers: selectedSources,
@@ -235,7 +239,7 @@ export default function Enrich() {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
   }
-  const [data, setData] = useState({});
+
   const handleChangeSelectedSources = (e) => {
     if (e.target.checked) {
       setSelectedSources([...selectedSources, e.target.value]);
@@ -412,7 +416,12 @@ export default function Enrich() {
             border: "2.5px solid rgba(191, 195, 203, 0.25)",
           }}
         >
-          <InvestigationGraph />
+          <InvestigationGraph
+            graphData={data.objects || []}
+            selectedIoc={
+              ioc.includes("/") ? ioc.substring(0, ioc.indexOf("/")) : ioc
+            }
+          />
         </Box>
       </Box>
     </Box>

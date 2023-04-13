@@ -3,10 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { Graph } from "react-d3-graph";
 import ReactCountryFlag from "react-country-flag";
 // import { graphData } from "../../utils/graphData";
-import CountryNode from "../graph-nodes/CountryNode";
+import CountryNode from "../graph-nodes/EnrichmentNode";
 import dummydata from "../../dummydata.json";
+import InvestigationNode from "../graph-nodes/InvestigationNode";
 export const InvestigationGraph = (props) => {
-  const graphData = dummydata.objects;
+  const { graphData, selectedIoc } = props;
   const flagRef = useRef();
   const centerX = 400;
   const centerY = 300;
@@ -17,7 +18,6 @@ export const InvestigationGraph = (props) => {
     nodes: [],
     links: [],
   });
-  const [selectedCenter, setSelectedCenter] = useState("1.179.185.50");
 
   useEffect(() => {
     setData(() => {
@@ -27,14 +27,14 @@ export const InvestigationGraph = (props) => {
         nodes: [],
         links: [],
       };
-      graphData.forEach((object, index) => {
+      graphData?.forEach((object, index) => {
         if (object.type !== "relationship") {
           const x =
-            object.name === selectedCenter
+            object.name === selectedIoc
               ? centerX
               : centerX + radius * Math.cos(angleIncrement * nodeNumber);
           const y =
-            object.name === selectedCenter
+            object.name === selectedIoc
               ? centerY
               : centerY + radius * Math.sin(angleIncrement * nodeNumber);
           newData.nodes.push({
@@ -42,6 +42,7 @@ export const InvestigationGraph = (props) => {
             x,
             y,
             color: index % 2 ? "blue" : "red",
+            viewGenerator: (node) => <InvestigationNode type={object.type} />,
           });
           nodeNumber++;
         } else {
@@ -50,7 +51,7 @@ export const InvestigationGraph = (props) => {
             source: object.source_ref,
             target: object.target_ref,
             label: object.relationship_type,
-            color: index % 2 ? "blue" : "yellow",
+            color: "#BFC3CB",
           });
         }
       });
@@ -60,63 +61,11 @@ export const InvestigationGraph = (props) => {
     });
   }, [graphData]);
 
-  const d = {
-    nodes: [
-      {
-        id: "192.167.23.2",
-        size: 300,
-        color: "red",
-        x: centerX + radius * Math.cos(angleIncrement * 3),
-        y: centerY + radius * Math.sin(angleIncrement * 3),
-        renderLabel: false,
-      },
-      {
-        id: "192.167.53.6",
-        x: centerX + radius * Math.cos(angleIncrement * 2),
-        y: centerY + radius * Math.sin(angleIncrement * 2),
-      },
-      {
-        id: "192.167.2.7",
-
-        x: centerX,
-        y: centerY,
-      },
-      {
-        id: "192.167.4.5",
-        x: centerX + radius * Math.cos(angleIncrement * 4),
-        y: centerY + radius * Math.sin(angleIncrement * 4),
-        size: 300,
-        viewGenerator: (node) => (
-          <CountryNode countryCode={graphData.geoIP2.country.iso_code} />
-        ),
-      },
-    ],
-    links: [
-      {
-        label: "Belongs To",
-        source: "192.167.23.2",
-        target: "192.167.53.6",
-      },
-      {
-        label: "My Label",
-        source: "192.167.23.2",
-        target: "192.167.2.7",
-      },
-      {
-        label: "Belongs To",
-        source: "192.167.2.7",
-        target: "192.167.4.5",
-
-        renderLabel: true,
-      },
-    ],
-  };
-
   // the graph configuration, just override the ones you need
   const myConfig = {
     automaticRearrangeAfterDropNode: false,
     collapsible: false,
-    directed: false,
+    directed: true,
     focusAnimationDuration: 0.75,
     focusZoom: 1,
     freezeAllDragEvents: false,
@@ -125,7 +74,7 @@ export const InvestigationGraph = (props) => {
 
     highlightDegree: 1,
     highlightOpacity: 1,
-    linkHighlightBehavior: false,
+    linkHighlightBehavior: true,
     maxZoom: 2,
     minZoom: 1,
     initialZoom: 1,
@@ -164,7 +113,6 @@ export const InvestigationGraph = (props) => {
       fontSize: 10,
       fontColor: "black",
       fontWeight: "normal",
-
       highlightColor: "SAME",
       highlightFontSize: 8,
       highlightFontWeight: "normal",
@@ -173,7 +121,7 @@ export const InvestigationGraph = (props) => {
       opacity: 0.4,
       renderLabel: false,
       semanticStrokeWidth: false,
-      strokeWidth: 1.5,
+      strokeWidth: 1.3,
       markerHeight: 6,
       markerWidth: 6,
       strokeDasharray: 0,
