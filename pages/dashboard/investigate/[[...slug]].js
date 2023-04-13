@@ -28,6 +28,7 @@ import { useMemo } from "react";
 import { InvestigationGraph } from "../../../components/investigation/InvestigationGraph";
 import CreateInvestigationDialog from "../../../components/dialogs/CreateInvestigationDialog";
 import InvestigationDialog from "../../../components/dialogs/InvesigationDialog";
+import LegendsDialog from "../../../components/dialogs/LegendsDialog";
 // import { EnrichmentGraph } from "../../../components/graph/EnrichmentGraph";
 // import ResultsDisplay from "../../../components/enrichment/ResultsDisplay";
 
@@ -125,6 +126,8 @@ export default function Enrich() {
   //Is Investigation Dialog Open
   const [isInvestigationDialogOpen, setIsInvestigationDialogOpen] =
     useState(false);
+  //Graph Legends
+  const [isLegendsOpen, setIsLegendsOpen] = useState(false);
   //Investigation Data
   const [data, setData] = useState({
     objects: [],
@@ -147,6 +150,9 @@ export default function Enrich() {
     {
       onSuccess: async (d) => {
         setIocTypes(d);
+      },
+      onError: (e) => {
+        console.log(e);
       },
     }
   );
@@ -252,6 +258,7 @@ export default function Enrich() {
           : currentNode?.type,
     };
     toast.loading("Investigating IOC");
+    setIsInvestigationDialogOpen(false);
     mutateAsyncInvestigation({
       payload: payload,
       selected_analyzers: selectedSources,
@@ -259,13 +266,11 @@ export default function Enrich() {
       .then(() => {
         toast.dismiss();
         toast.success("Investigated:" + ioc);
-        setIsInvestigationDialogOpen(false);
       })
       .catch((e) => {
         console.log(e);
         toast.dismiss();
         toast.error("Could not investigate IOC");
-        setIsInvestigationDialogOpen(false);
       });
   };
 
@@ -306,6 +311,7 @@ export default function Enrich() {
 
   return (
     <Box>
+      <LegendsDialog open={isLegendsOpen} setOpen={setIsLegendsOpen} />
       <CreateInvestigationDialog
         open={isCreateInvestigationsOpen}
         setOpen={setIsCreateInvestigationsOpen}
@@ -336,23 +342,33 @@ export default function Enrich() {
           margin: "70px 0px",
         }}
       >
-        <Box
-          sx={{
-            width: "890px",
-            display: "flex",
-            justifyContent: "end",
-            marginBottom: "20px",
-          }}
-        >
-          {investigationStarted && (
+        {investigationStarted && (
+          <Box
+            sx={{
+              width: "890px",
+              display: "flex",
+              justifyContent: "end",
+              marginBottom: "20px",
+            }}
+          >
+            <Button
+              style={{
+                backgroundColor: "#FF7D4C",
+              }}
+              sx={{ marginRight: "10px" }}
+              onClick={() => setIsLegendsOpen(true)}
+              variant="contained"
+            >
+              Legends
+            </Button>
             <Button
               variant="contained"
               onClick={() => setIsCreateInvestigationsOpen(true)}
             >
               New Investigation
             </Button>
-          )}
-        </Box>
+          </Box>
+        )}
         <Box
           sx={{
             height: "100%",
@@ -369,7 +385,9 @@ export default function Enrich() {
             <InvestigationGraph
               graphData={data.objects || []}
               selectedIoc={
-                ioc.includes("/") ? ioc.substring(0, ioc.indexOf("/")) : ioc
+                currentNode?.name || ioc.includes("/")
+                  ? ioc.substring(0, ioc.indexOf("/"))
+                  : ioc
               }
               onClickNode={onClickNode}
             />
