@@ -33,6 +33,7 @@ export const EnrichmentGraph = (props) => {
         id: ioc || "No data",
         x: centerX,
         y: centerY,
+        viewGenerator: (node) => <EnrichmentNode icon={"indicator.svg"} />,
       });
       //Add Geo IP Nodes
       if (graphData?.geoIP2?.country) {
@@ -40,12 +41,10 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "Geoloaction:country",
           name: graphData.geoIP2.country.names.en,
-          size: 300,
+
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => (
-            <EnrichmentNode countryCode={"United States"} />
-          ),
+          viewGenerator: (node) => <EnrichmentNode icon={"location.svg"} />,
         });
         newData.links.push({
           label: "Located In",
@@ -59,11 +58,12 @@ export const EnrichmentGraph = (props) => {
       if (graphData?.abuseIPDB?.data) {
         newData.nodes.push({
           id: "AbuseIPDB:UsageType",
-          name: graphData.abuseIPDB.data.usageType,
-          size: 300,
+          name: graphData.abuseIPDB.data.usageType || "None",
+
           color: "green",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode icon={"report.svg"} />,
         });
         newData.links.push({
           label: "Usage Type",
@@ -74,10 +74,13 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "AbuseIPDB:Domain",
           name: graphData.abuseIPDB.data.domain,
-          size: 300,
+
           color: "lightgreen",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => (
+            <EnrichmentNode icon={"vulnerability.svg"} />
+          ),
         });
         newData.links.push({
           label: "Domain",
@@ -88,10 +91,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "AbuseIPDB:IsWhiteListed",
           name: graphData.abuseIPDB.data.isWhitelisted ? "Yes" : "No",
-          size: 300,
+
           color: "red",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Is Whitelisted?",
@@ -102,10 +106,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "AbuseIPDB:ISP",
           name: graphData.abuseIPDB.data.isp,
-          size: 300,
+
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "ISP",
@@ -118,10 +123,11 @@ export const EnrichmentGraph = (props) => {
           name: graphData.abuseIPDB.data.lastReportedAt
             ? graphData.abuseIPDB.data.lastReportedAt
             : "Not Reported",
-          size: 300,
+
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Last Reported At",
@@ -132,10 +138,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "AbuseIPDB:TotalReports",
           name: String(graphData.abuseIPDB.data.totalReports),
-          size: 300,
+
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Total Reports",
@@ -146,10 +153,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "AbuseIPDB:TotalUsers",
           name: String(graphData.abuseIPDB.data.numDistinctUsers),
-          size: 300,
+
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Total Users",
@@ -163,10 +171,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "IPQualityScore:FraudScore",
           name: String(graphData.ipQualityScore.fraud_score),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Fraud Score",
@@ -177,10 +186,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "IPQualityScore:City",
           name: String(graphData.ipQualityScore.city || "Not Available"),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode icon={"location.svg"} />,
         });
         newData.links.push({
           label: "City",
@@ -191,10 +201,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "IPQualityScore:VPN",
           name: graphData.ipQualityScore.vpn ? "Yes" : "No",
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Is VPN?",
@@ -205,10 +216,11 @@ export const EnrichmentGraph = (props) => {
         newData.nodes.push({
           id: "IPQualityScore:TOR",
           name: graphData.ipQualityScore.tor ? "Yes" : "No",
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Is TOR?",
@@ -224,10 +236,11 @@ export const EnrichmentGraph = (props) => {
             graphData.virusTotal.data.attributes.last_analysis_stats
               ?.harmless || ""
           ),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Harmless Score/100",
@@ -241,10 +254,11 @@ export const EnrichmentGraph = (props) => {
             graphData.virusTotal.data.attributes.last_analysis_stats
               ?.malicious || "0"
           ),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Malicious Score/100",
@@ -258,10 +272,11 @@ export const EnrichmentGraph = (props) => {
             graphData.virusTotal.data.attributes.last_analysis_stats
               ?.malicious || "0"
           ),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Suspicious Score/100",
@@ -275,10 +290,11 @@ export const EnrichmentGraph = (props) => {
             graphData.virusTotal.data.attributes.last_analysis_stats
               ?.undetected || "0"
           ),
-          size: 300,
+
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+          viewGenerator: (node) => <EnrichmentNode />,
         });
         newData.links.push({
           label: "Undetected Score/100",
@@ -295,10 +311,11 @@ export const EnrichmentGraph = (props) => {
           newData.nodes.push({
             id: "AlienVault:Pulses" + index,
             name: String(pulse?.name || "-"),
-            size: 300,
+
             color: "lightgrey",
             x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
             y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
+            viewGenerator: (node) => <EnrichmentNode />,
           });
           newData.links.push({
             label: "Pulse",
@@ -318,7 +335,7 @@ export const EnrichmentGraph = (props) => {
     nodes: [
       {
         id: "192.167.23.2",
-        size: 300,
+
         color: "red",
         x: centerX + radius * Math.cos(angleIncrement * 3),
         y: centerY + radius * Math.sin(angleIncrement * 3),
@@ -339,10 +356,8 @@ export const EnrichmentGraph = (props) => {
         id: "192.167.4.5",
         x: centerX + radius * Math.cos(angleIncrement * 4),
         y: centerY + radius * Math.sin(angleIncrement * 4),
-        size: 300,
-        viewGenerator: (node) => (
-          <EnrichmentNode countryCode={graphData.geoIP2.country.iso_code} />
-        ),
+
+        viewGenerator: (node) => <EnrichmentNode icon={"location"} />,
       },
     ],
     links: [
@@ -394,12 +409,12 @@ export const EnrichmentGraph = (props) => {
     },
     node: {
       color: "#d3d3d3",
-      fontColor: "black",
-      fontSize: 8,
-      fontWeight: "normal",
+      fontColor: "#602071",
+      fontSize: 12,
+      fontWeight: "bold",
       highlightColor: "SAME",
       highlightFontSize: 8,
-      highlightFontWeight: "normal",
+      highlightFontWeight: "bold",
       highlightStrokeColor: "SAME",
       highlightStrokeWidth: "SAME",
       labelProperty: "name",
@@ -413,14 +428,14 @@ export const EnrichmentGraph = (props) => {
       symbolType: "circle",
     },
     link: {
-      color: "black",
-      fontColor: "lightgray",
+      color: "#77767F",
+
       fontSize: 10,
-      fontColor: "black",
-      fontWeight: "normal",
+      fontColor: "#77767F",
+      fontWeight: "bold",
 
       highlightColor: "SAME",
-      highlightFontSize: 8,
+      highlightFontSize: 10,
       highlightFontWeight: "normal",
       labelProperty: "label",
       mouseCursor: "pointer",

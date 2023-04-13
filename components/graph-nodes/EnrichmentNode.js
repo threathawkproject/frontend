@@ -1,23 +1,28 @@
 import React from "react";
 import ReactCountryFlag from "react-country-flag";
 import { byCountry } from "country-code-lookup";
+import { Box } from "@mui/material";
+import Image from "next/image";
 
-const EnrichmentNode = ({ countryCode }) => {
+const EnrichmentNode = (props) => {
+  const { icon, color } = props;
   return (
-    <div
+    <Box
       style={{
-        width: "30px",
-        height: "30px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "black",
-
+        margin: "auto auto",
+        height: "35px",
+        width: "35px",
         borderRadius: "100%",
+        backgroundColor: color || "#77767F",
+        border: "3px solid #29E3CD",
       }}
     >
-      <ReactCountryFlag className="emojiFlag" countryCode={"PK"} />
-    </div>
+      {icon ? (
+        <Image src={`/images/${icon}`} height={33} width={33} alt="" />
+      ) : (
+        <></>
+      )}
+    </Box>
   );
 };
 

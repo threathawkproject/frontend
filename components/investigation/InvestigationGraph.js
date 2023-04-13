@@ -7,7 +7,7 @@ import CountryNode from "../graph-nodes/EnrichmentNode";
 import dummydata from "../../dummydata.json";
 import InvestigationNode from "../graph-nodes/InvestigationNode";
 export const InvestigationGraph = (props) => {
-  const { graphData, selectedIoc } = props;
+  const { graphData, selectedIoc, onClickNode } = props;
   const flagRef = useRef();
   const centerX = 400;
   const centerY = 300;
@@ -63,7 +63,7 @@ export const InvestigationGraph = (props) => {
 
   // the graph configuration, just override the ones you need
   const myConfig = {
-    automaticRearrangeAfterDropNode: false,
+    automaticRearrangeAfterDropNode: true,
     collapsible: false,
     directed: true,
     focusAnimationDuration: 0.75,
@@ -80,7 +80,7 @@ export const InvestigationGraph = (props) => {
     initialZoom: 1,
     nodeHighlightBehavior: false,
     panAndZoom: false,
-    staticGraphWithDragAndDrop: true,
+    staticGraphWithDragAndDrop: false,
     d3: {
       alphaTarget: 0.05,
       gravity: -100,
@@ -89,9 +89,10 @@ export const InvestigationGraph = (props) => {
     },
     node: {
       color: "#d3d3d3",
-      fontColor: "black",
-      fontSize: 8,
-      fontWeight: "normal",
+      fontColor: "#602071",
+      fontSize: 10,
+      fontWeight: "bold",
+
       highlightColor: "SAME",
       highlightFontSize: 8,
       highlightFontWeight: "normal",
@@ -108,11 +109,10 @@ export const InvestigationGraph = (props) => {
       symbolType: "circle",
     },
     link: {
-      color: "black",
-      fontColor: "lightgray",
+      color: "#77767F",
       fontSize: 10,
-      fontColor: "black",
-      fontWeight: "normal",
+      fontColor: "#77767F",
+      fontWeight: "bold",
       highlightColor: "SAME",
       highlightFontSize: 8,
       highlightFontWeight: "normal",
@@ -129,10 +129,6 @@ export const InvestigationGraph = (props) => {
       strokeLinecap: "butt",
       renderLabel: true,
     },
-  };
-
-  const onClickNode = function (nodeId) {
-    window.alert(`Clicked node ${nodeId}`);
   };
 
   const onClickLink = function (source, target) {

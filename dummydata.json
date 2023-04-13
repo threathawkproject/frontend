@@ -4,6 +4,7 @@
   "objects": [
     {
       "type": "indicator",
+
       "spec_version": "2.1",
       "id": "indicator--3b7c6c78-59be-4ae3-8192-31cf4fbfde22",
       "created": "2023-04-11T18:16:33.773377Z",
