@@ -13,12 +13,11 @@ const EnrichmentNode = (props) => {
         height: "35px",
         width: "35px",
         borderRadius: "100%",
-        backgroundColor: color || "#77767F",
-        border: "3px solid #29E3CD",
+        backgroundColor: "#2F69FE",
       }}
     >
       {icon ? (
-        <Image src={`/images/${icon}`} height={33} width={33} alt="" />
+        <Image src={`/images/${icon}`} height={35} width={35} alt="" />
       ) : (
         <></>
       )}

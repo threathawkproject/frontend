@@ -58,7 +58,8 @@ const menuItems = [
   {
     title: "Guides",
     icon: LibraryBooks,
-    route: "/dashboard/guides",
+    route:
+      "https://scientific-expert-46e.notion.site/Documentation-b984317402534dea8b6e8cf1beca6394",
   },
   {
     title: "Settings",

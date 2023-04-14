@@ -153,7 +153,7 @@ export default function LegendsDialog(props) {
           >
             {legends.map((legend, index) => {
               return (
-                <ListItem>
+                <ListItem key={index}>
                   <ListItemAvatar>
                     <Avatar>
                       <Image src={legend.image} height={35} width={35} />
