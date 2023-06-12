@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SignInLayout from "../../components/layout/sign-in-layout";
 import {
   Container,
@@ -13,9 +13,25 @@ import Router, { useRouter } from "next/router";
 
 export default function SignIn() {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const onSignIn = () => {
-    toast.success("Signed In");
-    router.push("/dashboard");
+    if (
+      (formData.email === "huzaifa@threathawk.com" ||
+        formData.email === "zohaib@threathawk.com" ||
+        formData.email === "hussain@threathawk.com") &&
+      formData.password === "threatHawk123"
+    ) {
+      toast.success("Signed In");
+      router.push("/dashboard");
+    } else {
+      toast.error("Email or password incorrect");
+    }
   };
   return (
     <Box
@@ -47,8 +63,18 @@ export default function SignIn() {
             variant="outlined"
             label="Email address"
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
           />
-          <TextField variant="outlined" label="Password" type="password" />
+          <TextField
+            variant="outlined"
+            label="Password"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
         </Stack>
         <Typography
           sx={{

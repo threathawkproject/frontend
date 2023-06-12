@@ -10,7 +10,7 @@ export const InvestigationGraph = (props) => {
   const { graphData, selectedIoc, onClickNode } = props;
   const flagRef = useRef();
   const [centerX, setCenterX] = useState(400);
-  const [centerY, setCenterY] = useState(300);
+  const [centerY, setCenterY] = useState(50);
   const [investgationCount, setInvestigationCount] = useState(0);
   const radius = 250;
   const numPoints = 30;
@@ -61,14 +61,15 @@ export const InvestigationGraph = (props) => {
       return newData;
     });
     const centerOffset = investgationCount % 4;
-    if (centerOffset === 0) setCenterX(centerX + 300);
-    else if (centerOffset === 1) {
-      setCenterY(centerY + 300);
-    } else if (centerOffset === 2) {
-      setCenterX(centerX - 600);
-    } else if (centerOffset === 3) {
-      setCenterY(centerY - 600);
-    }
+    // if (centerOffset === 0) setCenterX(centerX + 300);
+    // else if (centerOffset === 1) {
+    //   setCenterY(centerY + 300);
+    // } else if (centerOffset === 2) {
+    //   setCenterX(centerX - 600);
+    // } else if (centerOffset === 3) {
+    //   setCenterY(centerY - 600);
+    // }
+    setCenterY(centerY + 300);
     setInvestigationCount(investgationCount + 1);
   }, [graphData]);
 

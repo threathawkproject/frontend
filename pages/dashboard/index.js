@@ -33,20 +33,69 @@ export default function DashboardHome() {
           backgroundColor={"#FF7D4C"}
         />
       </Box>
-      <Box marginTop="50px">
-        <Typography variant="h4" fontWeight={"bold"}>
-          IOCs by Type
-        </Typography>
-        <Box display={"flex"} justifyContent="center">
-          <IOCTypesBarChart />
+      <Box
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        marginTop={"70px"}
+      >
+        <Box>
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontWeight: "600",
+              fontSize: "16px",
+              letterSpacing: "0.5px",
+              textTransform: "capitalize",
+              color: "#77767F",
+            }}
+          >
+            IOCs by Type
+          </Typography>
+          <Box
+            display={"flex"}
+            sx={{
+              height: "400px",
+              width: "600px",
+              border: "1px dashed #C1C1C2",
+              padding: "10px",
+              background: "white",
+              border: "2.5px solid rgba(191, 195, 203, 0.25)",
+              borderRadius: "15px",
+            }}
+            justifyContent="center"
+          >
+            <IOCTypesBarChart />
+          </Box>
         </Box>
-      </Box>
-      <Box marginTop="50px">
-        <Typography variant="h4" fontWeight={"bold"}>
-          IOCs by location
-        </Typography>
-        <Box display={"flex"} justifyContent="center">
-          <MapChart />
+        <Box>
+          <Typography
+            sx={{
+              fontFamily: "Poppins",
+              fontWeight: "600",
+              fontSize: "16px",
+              letterSpacing: "0.5px",
+              textTransform: "capitalize",
+              color: "#77767F",
+            }}
+          >
+            Targeted Countries
+          </Typography>
+          <Box
+            display={"flex"}
+            justifyContent="center"
+            sx={{
+              height: "400px",
+              width: "600px",
+              border: "1px dashed #C1C1C2",
+              padding: "10px",
+              background: "white",
+              border: "2.5px solid rgba(191, 195, 203, 0.25)",
+              borderRadius: "15px",
+            }}
+          >
+            <MapChart />
+          </Box>
         </Box>
       </Box>
     </Box>

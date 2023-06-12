@@ -13,6 +13,7 @@ import {
   TableBody,
   TableFooter,
   TextField,
+  IconButton,
   Paper,
   InputAdornment,
   Stack,
@@ -24,7 +25,7 @@ import { NewIndicatorCards } from "../../../components/feeds/new-indicator-cards
 import { SourcePieChart } from "../../../components/feeds/source-pie-chart";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Search } from "@mui/icons-material";
+import { Search, DiamondOutlined } from "@mui/icons-material";
 // const iocs = getDummyData();
 export default function Feeds() {
   const router = useRouter();
@@ -73,7 +74,17 @@ export default function Feeds() {
         <SourcePieChart />
       </div>
       <Card sx={{ margin: "80px 0px" }}>
-        <Paper sx={{ minWidth: 400, maxHeight: "430px", overflowY: "scroll" }}>
+        <Typography
+          sx={{
+            margin: "20px 10px",
+            color: "#A3A2A9",
+            fontWeight: "bold",
+          }}
+          variant="h6"
+        >
+          IOC Feeds
+        </Typography>
+        <Box sx={{ minWidth: 400, maxHeight: "700px" }}>
           <Box sx={{ margin: "5px 20px" }}>
             {/* <TextField
               label="Search IOC"
@@ -101,10 +112,48 @@ export default function Feeds() {
               }}
             >
               <TableRow>
-                <TableCell>Source</TableCell>
-                <TableCell>IOC</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell align="right">Last Seen</TableCell>
+                <TableCell
+                  sx={{
+                    color: "#A3A2A9",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Source
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#A3A2A9",
+                    fontWeight: "bold",
+                  }}
+                >
+                  IOC
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#A3A2A9",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Type
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#A3A2A9",
+                    fontWeight: "bold",
+                  }}
+                  align="right"
+                >
+                  Last Seen
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#A3A2A9",
+                    fontWeight: "bold",
+                  }}
+                  align="right"
+                >
+                  Enrich
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -121,19 +170,26 @@ export default function Feeds() {
                         textDecoration: "underline",
                       },
                     }}
-                    onClick={() => {
-                      router.push("enrich/" + encodeURIComponent(data.ioc));
-                    }}
                   >
                     <TableCell>{data.sources[0]}</TableCell>
                     <TableCell>{data.ioc}</TableCell>
                     <TableCell>{data.type}</TableCell>
                     <TableCell align="right">{date}</TableCell>
+                    <TableCell align="right">
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          router.push("enrich/" + encodeURIComponent(data.ioc));
+                        }}
+                      >
+                        <DiamondOutlined fontSize="small" />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
-            <TableFooter
+            {/* <TableFooter
               sx={{
                 bottom: 0, // <-- KEY
                 zIndex: 2,
@@ -141,30 +197,32 @@ export default function Feeds() {
                 width: "100%",
                 backgroundColor: "#F6F5FA",
               }}
-            >
-              {/* <TableRow
-                sx={{
-                  width: "100%",
-                }}
-              >
-                <TablePagination
-                  rowsPerPageOptions={[10, 25, 100]}
-                  component="div"
-                  count={30}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </TableRow> */}
-            </TableFooter>
+            ></TableFooter> */}
           </Table>
-        </Paper>
-        <Stack spacing={2} alignItems="center" justifyContent={"center"}>
+        </Box>
+        <Stack
+          spacing={1}
+          marginTop={3}
+          marginBottom={3}
+          alignItems="center"
+          justifyContent={"center"}
+        >
           <Pagination
             count={count}
             onChange={handleChangePage}
             shape="rounded"
+          />
+          <TextField
+            size="small"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleChangePage(e, e.target.value);
+              }
+            }}
+            sx={{
+              width: "50px",
+            }}
+            label="P#"
           />
         </Stack>
       </Card>

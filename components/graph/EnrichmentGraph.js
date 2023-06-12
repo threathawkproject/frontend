@@ -5,6 +5,8 @@ import { Graph } from "react-d3-graph";
 import ReactCountryFlag from "react-country-flag";
 // import { graphData } from "../../utils/graphData";
 import EnrichmentNode from "../graph-nodes/EnrichmentNode";
+import VpnLockIcon from "@mui/icons-material/VpnLock";
+import RadarIcon from "@mui/icons-material/Radar";
 
 export const EnrichmentGraph = (props) => {
   const { data: graphData, ioc } = props;
@@ -78,9 +80,7 @@ export const EnrichmentGraph = (props) => {
           color: "lightgreen",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => (
-            <EnrichmentNode icon={"vulnerability.svg"} />
-          ),
+          viewGenerator: (node) => <EnrichmentNode icon={"domain-name.svg"} />,
         });
         newData.links.push({
           label: "Domain",
@@ -95,7 +95,7 @@ export const EnrichmentGraph = (props) => {
           color: "red",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => <EnrichmentNode icon={"sighting.svg"} />,
         });
         newData.links.push({
           label: "Is Whitelisted?",
@@ -110,7 +110,9 @@ export const EnrichmentGraph = (props) => {
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => (
+            <EnrichmentNode icon={"identity-group.svg"} />
+          ),
         });
         newData.links.push({
           label: "ISP",
@@ -127,7 +129,7 @@ export const EnrichmentGraph = (props) => {
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => <EnrichmentNode icon={"report.svg"} />,
         });
         newData.links.push({
           label: "Last Reported At",
@@ -142,7 +144,7 @@ export const EnrichmentGraph = (props) => {
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => <EnrichmentNode icon={"report.svg"} />,
         });
         newData.links.push({
           label: "Total Reports",
@@ -157,7 +159,9 @@ export const EnrichmentGraph = (props) => {
           color: "purple",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => (
+            <EnrichmentNode icon={"identity-group.svg"} />
+          ),
         });
         newData.links.push({
           label: "Total Users",
@@ -175,7 +179,7 @@ export const EnrichmentGraph = (props) => {
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => <EnrichmentNode icon={"threat-actor.svg"} />,
         });
         newData.links.push({
           label: "Fraud Score",
@@ -205,7 +209,17 @@ export const EnrichmentGraph = (props) => {
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => (
+            <EnrichmentNode
+              muiIcon={
+                <VpnLockIcon
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              }
+            />
+          ),
         });
         newData.links.push({
           label: "Is VPN?",
@@ -220,7 +234,18 @@ export const EnrichmentGraph = (props) => {
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => (
+            <EnrichmentNode
+              muiIcon={
+                <RadarIcon
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              }
+              color={"#7E4499"}
+            />
+          ),
         });
         newData.links.push({
           label: "Is TOR?",
@@ -258,7 +283,7 @@ export const EnrichmentGraph = (props) => {
           color: "orange",
           x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
           y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-          viewGenerator: (node) => <EnrichmentNode />,
+          viewGenerator: (node) => <EnrichmentNode icon={"threat-actor.svg"} />,
         });
         newData.links.push({
           label: "Malicious Score/100",
@@ -315,7 +340,9 @@ export const EnrichmentGraph = (props) => {
             color: "lightgrey",
             x: centerX + radius * Math.cos(angleIncrement * nodeNumber),
             y: centerY + radius * Math.sin(angleIncrement * nodeNumber),
-            viewGenerator: (node) => <EnrichmentNode />,
+            viewGenerator: (node) => (
+              <EnrichmentNode icon={"observed-data.svg"} />
+            ),
           });
           newData.links.push({
             label: "Pulse",

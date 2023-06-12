@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import Image from "next/image";
 
 const EnrichmentNode = (props) => {
-  const { icon, color } = props;
+  const { icon, color, muiIcon } = props;
   return (
     <Box
       style={{
@@ -13,11 +13,16 @@ const EnrichmentNode = (props) => {
         height: "35px",
         width: "35px",
         borderRadius: "100%",
-        backgroundColor: "#2F69FE",
+        backgroundColor: color || "#2F69FE",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       {icon ? (
         <Image src={`/images/${icon}`} height={35} width={35} alt="" />
+      ) : muiIcon ? (
+        muiIcon
       ) : (
         <></>
       )}

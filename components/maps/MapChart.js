@@ -9,6 +9,33 @@ import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import _ from "lodash";
 
+const continentCordinates = [
+  {
+    continent: "North America",
+    latlng: [-102, 38],
+  },
+  {
+    continent: "South America",
+    latlng: [-58, -10],
+  },
+  {
+    continent: "Africa",
+    latlng: [24, 0],
+  },
+  {
+    continent: "Australia",
+    latlng: [132, -25],
+  },
+  {
+    continent: "Asia",
+    latlng: [90, 40],
+  },
+  {
+    continent: "Europe",
+    latlng: [25, 45],
+  },
+];
+
 const geoUrl =
   "https://raw.githubusercontent.com/deldersveld/topojson/master/world-continents.json";
 
@@ -45,6 +72,15 @@ const MapChart = () => {
         return (
           <Marker key={city_code} coordinates={[lng, lat]}>
             <circle fill="#F53" stroke="#FFF" r={popScale(population)} />
+          </Marker>
+        );
+      })}
+      {continentCordinates.map((continent, index) => {
+        return (
+          <Marker key={index} coordinates={continent.latlng} fill="#777">
+            <text textAnchor="middle" fill="black">
+              {continent.continent}
+            </text>
           </Marker>
         );
       })}
