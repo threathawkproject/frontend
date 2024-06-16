@@ -61,7 +61,7 @@ const investigate = async (variables) => {
   const { payload, selected_analyzers } = variables;
   try {
     const { file_path, root_node_id } = payload;
-    const response2 = await axios.post("http://localhost:8082/investigate", {
+    const response2 = await axios.post("http://localhost:8002/investigate", {
       file_path: file_path,
       enrichment: {
         node_id: payload.root_node_id,
@@ -71,7 +71,7 @@ const investigate = async (variables) => {
       },
     });
     try {
-      const response3 = await axios.post("http://localhost:8082/display", {
+      const response3 = await axios.post("http://localhost:8002/display", {
         file_path: file_path,
       });
       return response3.data;
@@ -89,12 +89,13 @@ const investigate = async (variables) => {
 //   return resp.data;
 // };
 const getInvestigationTypes = async () => {
-  const resp = await axios.get("http://localhost:8082/get_investigation_types");
+  const resp = await axios.get("http://localhost:8002/get_investigation_types");
   return resp.data;
 };
+// AWAIS:: NOTE:: Check the port again for this one as it was 8080, assuming he wanted to use enrichment analyzers here
 const getAnalyzers = async (type) => {
   const resp = await axios.get(
-    `http://localhost:8080/get_investigation_analyzers?analyzer_type=${type}`
+    `http://localhost:8000/get_investigation_analyzers?analyzer_type=${type}`
   );
   return resp.data;
 };
@@ -195,7 +196,7 @@ export default function Enrich() {
   };
   const createInvestigation = async (payload) => {
     const response = await axios.post(
-      "http://localhost:8082/create_investigation",
+      "http://localhost:8002/create_investigation",
       payload
     );
     setCreateInvestigationResponse(response);

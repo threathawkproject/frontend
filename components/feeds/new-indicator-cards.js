@@ -3,8 +3,8 @@ import { HomeInfoCard } from "../cards/home-info-card";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 const getNewIndicators = async()=>{
-
-    const resp = await axios.get('http://localhost:8000/api/ioc_feeds/stats/new_iocs/length/')
+// AWAIS:: NOTE:: Changed Port 8000 to 8004
+    const resp = await axios.get('http://localhost:8004/api/ioc_feeds/stats/new_iocs/length/')
     return  resp.data
 
 }

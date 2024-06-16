@@ -63,7 +63,7 @@ const analyzeRequest = async (postData, isFile = false, file = null) => {
   if (isFile) {
     form.append("form", JSON.stringify({ ...postData, ioc: "" }));
     form.append("file", file, file?.name);
-    const resp = await axios.post("http://127.0.0.1:8080/analyze", form, {
+    const resp = await axios.post("http://127.0.0.1:8000/analyze", form, {
       headers: {
         ...form.getHeaders(),
         Accept: "application/json",
@@ -72,14 +72,14 @@ const analyzeRequest = async (postData, isFile = false, file = null) => {
     });
     return resp.data;
   } else {
-    const resp = await axios.post("http://127.0.0.1:8080/analyze", postData);
+    const resp = await axios.post("http://127.0.0.1:8000/analyze", postData);
     return resp.data;
   }
 };
 
 //Get a list of all analyzers
 const getAnalyzers = async () => {
-  const resp = await axios.get("http://127.0.0.1:8080/analyzers");
+  const resp = await axios.get("http://127.0.0.1:8000/analyzers");
   return resp.data;
 };
 

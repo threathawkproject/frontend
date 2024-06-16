@@ -8,7 +8,7 @@ import AnalyzerSettingsCard from "../../components/analyzers/AnalyzerSettingsCar
 import axios from "axios";
 
 const getAnalyzers = async () => {
-  const resp = await axios.get("http://127.0.0.1:8080/analyzers");
+  const resp = await axios.get("http://127.0.0.1:8000/analyzers");
   return resp.data;
 };
 
