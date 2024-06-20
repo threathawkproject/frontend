@@ -44,7 +44,7 @@ export default function Feeds() {
   const fetchIOCs = async (page = 1) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/ioc_feeds?page=${page}`
+        `http://localhost:8004/api/ioc_feeds?page=${page}`
       );
       console.log("IOCS", response.data);
       setIocs(response.data.results);
