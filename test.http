@@ -1,4 +1,4 @@
-# POST http://localhost:8082/create_investigation
+# POST http://localhost:8002/create_investigation
 
 # {
 #     "type": "indicator",
@@ -9,7 +9,7 @@
 # }
 
 
-POST http://localhost:8082/investigate
+POST http://localhost:8002/investigate
 
 {
     "file_path": "./data/bigf",
@@ -21,7 +21,7 @@ POST http://localhost:8082/investigate
     }
 }
 
-# POST http://localhost:8082/display
+# POST http://localhost:8002/display
 
 # {
 #     "file_path":"./data/j7fj"
