@@ -24,8 +24,10 @@ export default function SignIn() {
     if (
       (formData.email === "huzaifa@threathawk.com" ||
         formData.email === "zohaib@threathawk.com" ||
+        formData.email === "admin@threathawk.com" ||
         formData.email === "hussain@threathawk.com") &&
-      formData.password === "threatHawk123"
+      (formData.password === "threatHawk123" ||
+      formData.password === "admin")
     ) {
       toast.success("Signed In");
       router.push("/dashboard");
