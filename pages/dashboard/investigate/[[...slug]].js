@@ -167,7 +167,7 @@ export default function Enrich() {
         setData(d);
       },
       onError: (e) => {
-        console.log("OH NOEEEEEEEEE", e);
+        console.log("OH NOEEEEEEEEE PT1", e);
       },
     }
   );
@@ -177,7 +177,7 @@ export default function Enrich() {
         setSources(d);
       },
       onError: (e) => {
-        console.log("OH NOEEEEEEEEE", e);
+        console.log("OH NOEEEEEEEEE PT2", e);
       },
     });
 
